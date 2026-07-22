@@ -512,7 +512,7 @@
 
               <!-- Campos para Motorista (Cliente) -->
               <div id="fields-motorista" class="space-y-3">
-                <input type="text" name="nome" required placeholder="Nome completo" class="w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
+                <input type="text" name="nome" required maxlength="40" placeholder="Nome completo" class="w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
                 <div>
                   <input type="tel" name="telefone" required maxlength="15" inputmode="numeric" placeholder="Telefone / WhatsApp (com DDD)" class="js-tel w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
                   <p class="field-error hidden mt-1 text-xs text-red-600">Informe um telefone válido com DDD (ex: (11) 91234-5678).</p>
@@ -525,7 +525,7 @@
 
               <!-- Campos para Prestador de Serviço -->
               <div id="fields-prestador" class="hidden space-y-3">
-                <input type="text" name="estabelecimento" placeholder="Nome do estabelecimento" class="w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
+                <input type="text" name="estabelecimento" maxlength="40" placeholder="Nome do estabelecimento" class="w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
                 <div>
                   <input type="tel" name="telefone_prestador" maxlength="15" inputmode="numeric" placeholder="Telefone para contato (com DDD)" class="js-tel w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
                   <p class="field-error hidden mt-1 text-xs text-red-600">Informe um telefone válido com DDD (ex: (11) 91234-5678).</p>
