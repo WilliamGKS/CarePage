@@ -3,496 +3,1042 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CAR.e — O fim da incerteza na hora de consertar seu veículo</title>
-<meta name="description" content="CAR.e é o protocolo digital de procedência veicular. Acompanhe o serviço com qualquer prestador automotivo em tempo real e receba um dossiê digital com certificado CAR.e — para carros, motos, caminhonetes e caminhões.">
-<meta name="theme-color" content="#1D4ED8">
+<title>CAR.e | O fim da incerteza na hora de consertar seu veículo</title>
+<meta name="description" content="CAR.e é o protocolo digital de procedência veicular. Acompanhe o serviço com qualquer prestador automotivo em tempo real e receba um dossiê digital que ninguém pode editar. Para carros, motos, caminhonetes e caminhões.">
+<meta name="theme-color" content="#07090d">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="CAR.e — Protocolo Digital de Procedência e Certificação Veicular">
-<meta property="og:description" content="Rastreio em tempo real do serviço + Dossiê Digital com Certificado CAR.e para todo tipo de veículo.">
+<meta property="og:url" content="https://careauto.com.br/">
+<meta property="og:title" content="CAR.e | Protocolo digital de procedência veicular">
+<meta property="og:description" content="Acompanhe o serviço do seu veículo em tempo real e receba um dossiê digital com Certificado CAR.e.">
 <meta name="twitter:card" content="summary">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231D4ED8' stroke-width='2'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' fill='%23FFFFFF'/%3E%3Cpolyline points='9 12 11 14 15 10'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232f6bff' stroke-width='2'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' fill='%2307090d'/%3E%3Cpolyline points='9 12 11 14 15 10'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          car: {
-            bg: '#FFFFFF',
-            bgsoft: '#F3F7FF',
-            surface: '#FFFFFF',
-            surface2: '#EAF1FF',
-            border: '#DCE6F7',
-            navy: '#0B1B33',
-            text: '#0F1E33',
-            muted: '#5B6B84',
-            blue: '#1D4ED8',
-            bluelight: '#2563EB',
-            bluedark: '#123C99',
-            deep: '#0A1E3F',
-          }
-        },
-        fontFamily: {
-          sora: ['Sora', 'sans-serif'],
-          inter: ['Inter', 'sans-serif'],
-        },
-        boxShadow: {
-          'glow-blue': '0 0 50px -10px rgba(29,78,216,0.32)',
-          'card': '0 10px 30px -12px rgba(15,30,60,0.14)',
-        }
-      }
-    }
-  }
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
 
 <style>
-  html { scroll-behavior: smooth; }
-  body { background-color: #FFFFFF; }
-  section[id] { scroll-margin-top: 84px; }
-
-  .bg-grid {
-    background-image: linear-gradient(rgba(15,30,60,0.05) 1px, transparent 1px),
-                       linear-gradient(90deg, rgba(15,30,60,0.05) 1px, transparent 1px);
-    background-size: 42px 42px;
+  /* Tema escuro fixo por decisão de marca: as artes do CAR.e (certificado, logo claro) nascem em fundo escuro.
+     Raios: botões em pílula, contêineres 28px, blocos internos 14px. Um único acento: o azul do logo. */
+  :root {
+    --bg: #07090d;
+    --bg-2: #0b0f16;
+    --surface: #10151f;
+    --surface-2: #161d2b;
+    --line: rgba(160, 182, 222, 0.10);
+    --line-2: rgba(160, 182, 222, 0.18);
+    --text: #eef2f8;
+    --muted: #93a0b4;
+    --faint: #75829a;
+    --accent: #2f6bff;
+    --accent-hi: #6d97ff;
+    --accent-soft: rgba(47, 107, 255, 0.14);
+    --danger: #ff7a7a;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --r-xl: 28px;
+    --r-lg: 20px;
+    --r-md: 14px;
+    --wrap: 1240px;
+    --gutter: clamp(16px, 4vw, 40px);
+    --z-nav: 20;
+    --z-menu: 30;
+    --z-grain: 40;
+    color-scheme: dark;
   }
 
-  .text-gradient {
-    background: linear-gradient(90deg, #1D4ED8, #123C99);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; }
+  h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; text-wrap: balance; }
+  p { margin: 0; text-wrap: pretty; }
+  ::selection { background: var(--accent); color: #fff; }
+  :focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; border-radius: 6px; }
+  .hidden { display: none !important; }
+  .mono { font-family: 'Geist Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  .wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+  section[id], div[id] { scroll-margin-top: 96px; }
+
+  .skip {
+    position: absolute; left: 16px; top: -60px; z-index: var(--z-menu);
+    background: var(--accent); color: #fff; padding: 10px 16px; border-radius: 999px;
+  }
+  .skip:focus { top: 16px; }
+
+  /* Grão fixo: quebra a chapa digital sem custo de repaint no scroll */
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: var(--z-grain); opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  .text-gradient-light {
-    background: linear-gradient(90deg, #93C5FD, #FFFFFF);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* Barra de progresso de leitura (só onde o navegador suporta scroll-timeline) */
+  .progress { display: none; }
+  @supports (animation-timeline: scroll()) {
+    .progress {
+      display: block; position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: var(--z-menu);
+      background: var(--accent); transform-origin: 0 50%; transform: scaleX(0);
+      animation: grow linear both; animation-timeline: scroll(root);
+    }
+    @keyframes grow { to { transform: scaleX(1); } }
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-14px); }
+  /* ---------- Botões ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 12px; white-space: nowrap;
+    border-radius: 999px; border: 0; cursor: pointer; font-weight: 500; font-size: 16px;
+    transition: transform .5s var(--ease), background-color .3s var(--ease), box-shadow .5s var(--ease);
   }
-  .animate-float { animation: float 7s ease-in-out infinite; }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--accent); color: #fff; padding: 8px 8px 8px 24px;
+    box-shadow: 0 10px 30px -10px rgba(47, 107, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+  .btn-primary:hover { background: #3d77ff; box-shadow: 0 16px 40px -12px rgba(47, 107, 255, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+  .btn-primary .btn-ic {
+    width: 36px; height: 36px; border-radius: 999px; background: rgba(255, 255, 255, 0.16);
+    display: grid; place-items: center; font-size: 18px;
+    transition: transform .5s var(--ease);
+  }
+  .btn-primary:hover .btn-ic { transform: translateX(3px) scale(1.06); }
+  .btn-sm { font-size: 14px; padding: 6px 6px 6px 18px; gap: 10px; }
+  .btn-sm .btn-ic { width: 30px; height: 30px; font-size: 15px; }
+  .link-arrow {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-weight: 500;
+    transition: color .3s var(--ease);
+  }
+  .link-arrow i { transition: transform .5s var(--ease); }
+  .link-arrow:hover { color: var(--text); }
+  .link-arrow:hover i { transform: translateX(4px); }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity .7s ease, transform .7s ease;
-  }
-  .reveal.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-hi);
   }
 
-  .role-btn.role-active {
-    background-color: rgba(29,78,216,0.08);
-    border-color: #1D4ED8;
-    color: #1D4ED8;
+  /* ---------- Revelação na entrada ---------- */
+  .reveal { opacity: 0; transform: translateY(28px); filter: blur(6px); transition: opacity 1s var(--ease), transform 1s var(--ease), filter 1s var(--ease); transition-delay: calc(var(--d, 0) * 90ms); }
+  .reveal.is-in { opacity: 1; transform: none; filter: none; }
+
+  /* ---------- Navegação: ilha flutuante ---------- */
+  .nav {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: var(--z-nav);
+    width: min(calc(100% - 32px), 1040px);
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    height: 60px; padding: 0 8px 0 22px; border-radius: 999px;
+    background: rgba(12, 16, 24, 0.55); border: 1px solid var(--line);
+    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: background-color .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .nav.is-scrolled { background: rgba(12, 16, 24, 0.82); border-color: var(--line-2); box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05); }
+  .nav-logo img { height: 24px; width: auto; }
+  .nav-links { display: flex; gap: 4px; font-size: 14.5px; color: var(--muted); }
+  .nav-links a { padding: 8px 14px; border-radius: 999px; transition: color .3s var(--ease), background-color .3s var(--ease); }
+  .nav-links a:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
+  .nav-links a.is-current { color: var(--text); }
+  .burger {
+    display: none; position: relative; width: 44px; height: 44px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06); border: 0; cursor: pointer;
+  }
+  .burger span {
+    position: absolute; left: 13px; right: 13px; height: 1.5px; background: var(--text); border-radius: 2px;
+    transition: transform .5s var(--ease), top .5s var(--ease);
+  }
+  .burger span:nth-child(1) { top: 18px; }
+  .burger span:nth-child(2) { top: 25px; }
+  .burger[aria-expanded="true"] span:nth-child(1) { top: 21.5px; transform: rotate(45deg); }
+  .burger[aria-expanded="true"] span:nth-child(2) { top: 21.5px; transform: rotate(-45deg); }
+
+  .menu {
+    position: fixed; inset: 0; z-index: calc(var(--z-nav) - 1);
+    background: rgba(7, 9, 13, 0.9); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+    display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 96px 28px 40px;
+    opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s linear .5s;
+  }
+  .menu.is-open { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); }
+  .menu a.menu-link {
+    font-size: clamp(32px, 9vw, 44px); font-weight: 500; letter-spacing: -0.03em; padding: 6px 0;
+    opacity: 0; transform: translateY(40px); transition: opacity .6s var(--ease), transform .7s var(--ease);
+  }
+  .menu .btn { margin-top: 28px; align-self: flex-start; opacity: 0; transform: translateY(40px); transition: opacity .6s var(--ease), transform .7s var(--ease); }
+  .menu.is-open a.menu-link, .menu.is-open .btn { opacity: 1; transform: none; transition-delay: calc(80ms + var(--i) * 60ms); }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; padding: 128px 0 72px; min-height: 100dvh; display: flex; align-items: center; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: -20% -10% auto auto; width: 70vw; height: 70vw; max-width: 980px; max-height: 980px;
+    background: radial-gradient(closest-side, rgba(47, 107, 255, 0.22), rgba(47, 107, 255, 0.05) 55%, transparent 72%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ""; position: absolute; left: -15%; bottom: -30%; width: 60vw; height: 50vw;
+    background: radial-gradient(closest-side, rgba(47, 107, 255, 0.08), transparent 70%); pointer-events: none;
+  }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: clamp(40px, 6vw, 88px); align-items: center; width: 100%; }
+  .hero h1 { margin-top: 22px; font-size: clamp(3rem, 7.4vw, 6.6rem); font-weight: 600; letter-spacing: -0.045em; line-height: 0.96; }
+  .strike { position: relative; display: inline-block; color: var(--muted); transition: color 1s var(--ease) .9s; }
+  .strike::after {
+    content: ""; position: absolute; left: -2%; right: -2%; top: 54%; height: 0.075em; border-radius: 99px;
+    background: var(--accent); transform: scaleX(0); transform-origin: 0 50%;
+    transition: transform 1s var(--ease) .5s; box-shadow: 0 0 24px rgba(47, 107, 255, 0.6);
+  }
+  .is-loaded .strike::after { transform: scaleX(1); }
+  .is-loaded .strike { color: var(--faint); }
+  .hero-sub { margin-top: 28px; max-width: 34ch; font-size: clamp(18px, 1.5vw, 20px); color: var(--muted); line-height: 1.55; }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .hero-ctas { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+
+  /* Card do dossiê ao vivo (componente real, animado pela narrativa do serviço) */
+  .shell {
+    padding: 8px; border-radius: var(--r-xl);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    border: 1px solid var(--line);
+    box-shadow: 0 40px 100px -40px rgba(47, 107, 255, 0.35), 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+  }
+  .core { border-radius: calc(var(--r-xl) - 8px); background: var(--surface); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+  .live { width: 100%; max-width: 460px; justify-self: end; }
+  .live .core { padding: 22px 22px 18px; }
+  .live-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+  .live-head small { display: block; font-size: 12px; color: var(--faint); }
+  .live-head strong { display: block; margin-top: 2px; font-weight: 500; font-size: 16px; letter-spacing: -0.01em; }
+  .status {
+    display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+    font-size: 12.5px; font-weight: 500; padding: 5px 10px; border-radius: 8px;
+    background: var(--accent-soft); color: var(--accent-hi); transition: background-color .5s var(--ease), color .5s var(--ease);
+  }
+  .status.is-done { background: var(--accent); color: #fff; }
+  .timeline { list-style: none; margin: 16px 0 0; padding: 0; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--line-2); }
+  .ev { position: relative; padding: 0 0 14px 30px; opacity: 0; transform: translateY(10px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .ev.is-in { opacity: 1; transform: none; }
+  .ev::before {
+    content: ""; position: absolute; left: 2px; top: 6px; width: 11px; height: 11px; border-radius: 99px;
+    background: var(--surface); border: 1.5px solid var(--accent); transition: background-color .4s var(--ease);
+  }
+  .ev.is-in::before { background: var(--accent); }
+  .ev-row { display: flex; justify-content: space-between; gap: 12px; font-size: 14.5px; line-height: 1.4; }
+  .ev-row time { font-size: 12.5px; color: var(--faint); flex-shrink: 0; }
+  .ev p { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.45; }
+  .ev .who { color: var(--accent-hi); }
+  .thumbs { display: flex; gap: 6px; margin-top: 8px; }
+  .thumbs img { width: 52px; height: 40px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line-2); }
+  .seal {
+    display: flex; align-items: center; gap: 12px; margin-top: 4px; padding: 12px 14px; border-radius: var(--r-md);
+    background: linear-gradient(120deg, rgba(47, 107, 255, 0.2), rgba(47, 107, 255, 0.06)); border: 1px solid rgba(47, 107, 255, 0.35);
+    opacity: 0; transform: scale(0.96); transition: opacity .8s var(--ease), transform .8s var(--ease);
+  }
+  .seal.is-in { opacity: 1; transform: none; }
+  .seal i { font-size: 28px; color: var(--accent-hi); }
+  .seal strong { display: block; font-size: 14px; font-weight: 500; }
+  .seal span { font-size: 12.5px; color: var(--muted); }
+  .live-cap { margin-top: 14px; text-align: center; font-size: 12.5px; color: var(--faint); }
+  .replay { background: none; border: 0; color: var(--accent-hi); cursor: pointer; font-size: 12.5px; padding: 4px 6px; border-radius: 6px; }
+  .replay:hover { text-decoration: underline; }
+
+  /* ---------- Faixa de categorias (único marquee da página) ---------- */
+  .band { border-block: 1px solid var(--line); background: var(--bg-2); padding: 22px 0; overflow: hidden; }
+  .band-inner { display: flex; align-items: center; gap: 0; }
+  .band-label { flex-shrink: 0; padding-inline: var(--gutter) 28px; font-size: 14px; color: var(--muted); border-right: 1px solid var(--line); margin-right: 0; }
+  .marquee { overflow: hidden; flex: 1; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .marquee-track { display: flex; width: max-content; animation: slide 48s linear infinite; }
+  .marquee-track ul { display: flex; gap: 44px; padding: 0 22px; margin: 0; list-style: none; }
+  .marquee-track li { display: flex; align-items: center; gap: 10px; white-space: nowrap; font-size: 17px; color: var(--text); }
+  .marquee-track li i { color: var(--accent-hi); font-size: 22px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ---------- Problema: antes/depois que se transforma ---------- */
+  .problem { padding: clamp(96px, 14vw, 176px) 0 clamp(80px, 10vw, 140px); }
+  .problem h2 { font-size: clamp(2.4rem, 5.6vw, 4.8rem); max-width: 16ch; }
+  .problem-lead { margin-top: 24px; max-width: 52ch; color: var(--muted); font-size: 19px; }
+  .swaps { margin-top: clamp(56px, 8vw, 96px); }
+  .swap {
+    display: grid; grid-template-columns: 1fr auto 1.15fr; align-items: center; gap: clamp(16px, 3vw, 40px);
+    padding: 26px 0; border-bottom: 1px solid var(--line);
+  }
+  .swap:first-child { border-top: 1px solid var(--line); }
+  .swap .old { position: relative; font-size: clamp(17px, 1.6vw, 21px); color: var(--muted); justify-self: start; }
+  .swap .old::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 55%; height: 1.5px; background: var(--danger);
+    transform: scaleX(0); transform-origin: 0 50%; transition: transform .9s var(--ease) calc(var(--i) * 140ms + 200ms);
+  }
+  .swap .arrow { color: var(--faint); font-size: 22px; opacity: 0; transition: opacity .6s var(--ease) calc(var(--i) * 140ms + 600ms); }
+  .swap .new {
+    display: flex; align-items: center; gap: 14px; font-size: clamp(19px, 2vw, 26px); font-weight: 500; letter-spacing: -0.02em;
+    opacity: 0; transform: translateX(-14px); transition: opacity .9s var(--ease) calc(var(--i) * 140ms + 700ms), transform .9s var(--ease) calc(var(--i) * 140ms + 700ms);
+  }
+  .swap .new i { color: var(--accent-hi); font-size: 26px; flex-shrink: 0; }
+  .swaps.is-in .old { color: var(--faint); }
+  .swaps.is-in .old::after { transform: scaleX(1); }
+  .swaps.is-in .arrow { opacity: 1; }
+  .swaps.is-in .new { opacity: 1; transform: none; }
+
+  /* ---------- Como funciona: visual fixo + passos ---------- */
+  .how { padding: clamp(80px, 10vw, 140px) 0; background: var(--bg-2); border-block: 1px solid var(--line); }
+  .how h2 { font-size: clamp(2.2rem, 4.6vw, 4rem); max-width: 18ch; }
+  .how-grid { margin-top: clamp(48px, 7vw, 88px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); }
+  .how-visual { position: sticky; top: 112px; align-self: start; }
+  .how-frame { position: relative; aspect-ratio: 4 / 3.3; overflow: hidden; border-radius: calc(var(--r-xl) - 8px); background: #0a0d13; }
+  .how-frame img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transform: scale(1.06); transition: opacity 1s var(--ease), transform 1.6s var(--ease);
+  }
+  .how-frame img.is-on { opacity: 1; transform: none; }
+  .how-frame img.contain { object-fit: cover; }
+  .how-cap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 10px 6px; font-size: 14px; color: var(--muted); }
+  .how-cap .mono { color: var(--faint); font-size: 13px; }
+  .steps { list-style: none; margin: 0; padding: 0; }
+  .step { padding: clamp(28px, 6vh, 64px) 0; min-height: 52vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.32; transition: opacity .6s var(--ease); }
+  .step.is-active { opacity: 1; }
+  .step-ic { width: 52px; height: 52px; border-radius: var(--r-md); display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-hi); font-size: 26px; }
+  .step h3 { margin-top: 22px; font-size: clamp(1.6rem, 2.6vw, 2.25rem); }
+  .step p { margin-top: 14px; color: var(--muted); max-width: 44ch; font-size: 18px; }
+  .step-img { display: none; }
+
+  /* ---------- Responsabilidade compartilhada: bento ---------- */
+  .duty { padding: clamp(96px, 13vw, 168px) 0; }
+  .duty h2 { font-size: clamp(2.3rem, 5vw, 4.4rem); max-width: 17ch; }
+  .duty-lead { margin-top: 24px; max-width: 58ch; color: var(--muted); font-size: 19px; }
+  .bento { margin-top: clamp(48px, 7vw, 80px); display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(230px, auto); gap: 16px; }
+  .cell {
+    position: relative; overflow: hidden; border-radius: var(--r-xl); padding: 32px;
+    background: var(--surface); border: 1px solid var(--line);
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .cell::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s var(--ease);
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(47, 107, 255, 0.12), transparent 60%);
+  }
+  .cell:hover::before { opacity: 1; }
+  .cell > * { position: relative; }
+  .cell h3 { font-size: clamp(1.35rem, 2vw, 1.75rem); max-width: 22ch; }
+  .cell p { margin-top: 12px; color: var(--muted); font-size: 16px; max-width: 46ch; }
+  .cell-ic { font-size: 30px; color: var(--accent-hi); margin-bottom: auto; padding-bottom: 28px; }
+  .cell-a { grid-column: span 2; grid-row: span 2; justify-content: space-between; gap: 40px;
+    background: radial-gradient(120% 90% at 100% 0%, rgba(47, 107, 255, 0.16), transparent 55%), var(--surface); }
+  .cell-a h3 { font-size: clamp(1.8rem, 3.2vw, 2.8rem); }
+  .cell-d { grid-column: span 3; min-height: 0;
+    background: linear-gradient(110deg, #1b3fa8 0%, #2f6bff 55%, #4a7dff 100%); border-color: rgba(255, 255, 255, 0.12);
+    flex-direction: row; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .cell-d p { color: rgba(255, 255, 255, 0.82); }
+  .cell-d .choices { display: flex; gap: 10px; flex-wrap: wrap; }
+  .chip-demo { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 999px; background: rgba(7, 9, 13, 0.28); border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 500; font-size: 15px; }
+  .chip-demo.solid { background: #fff; color: #10306f; border-color: #fff; }
+
+  /* Mini aprovação interativa */
+  .approve { max-width: 440px; }
+  .approve-card { padding: 20px; }
+  .approve-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .approve-top small { color: var(--faint); font-size: 12.5px; }
+  .approve-top strong { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+  .approve-item { margin-top: 6px; font-size: 15px; color: var(--muted); }
+  .approve-actions { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .approve-actions button {
+    border-radius: 999px; padding: 12px; cursor: pointer; font-weight: 500; font-size: 15px;
+    border: 1px solid var(--line-2); background: transparent;
+    transition: transform .4s var(--ease), background-color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .approve-actions button:active { transform: scale(0.97); }
+  .approve-actions .yes { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .approve-actions .yes:hover { background: #3d77ff; }
+  .approve-actions .no:hover { border-color: var(--muted); }
+  .approve-log { margin-top: 14px; min-height: 22px; font-size: 13.5px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .approve-log i { color: var(--accent-hi); font-size: 17px; }
+  .approve-log.is-no i { color: var(--danger); }
+  .approve-hint { font-size: 12.5px; color: var(--faint); margin-top: 10px; }
+
+  /* ---------- Dossiê ---------- */
+  .dossie { padding: clamp(96px, 12vw, 160px) 0; background: var(--bg-2); border-block: 1px solid var(--line); overflow: hidden; }
+  .dossie-head { text-align: center; }
+  .dossie-head h2 { font-size: clamp(2.4rem, 5.6vw, 5rem); margin-inline: auto; max-width: 15ch; }
+  .dossie-head p { margin: 24px auto 0; max-width: 50ch; color: var(--muted); font-size: 19px; }
+  .orbit { margin-top: clamp(56px, 8vw, 96px); display: grid; grid-template-columns: 1fr minmax(280px, 440px) 1fr; gap: clamp(24px, 4vw, 64px); align-items: center; }
+  .orbit-col { display: grid; gap: clamp(36px, 6vw, 72px); }
+  .orbit-col:first-child { text-align: right; }
+  .fact i { font-size: 26px; color: var(--accent-hi); }
+  /* Cadeado: a haste desce, o corpo acusa o clique e o fundo acende em azul quando tranca */
+  .lk { width: 1em; height: 1em; overflow: visible; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .lk-shackle { transform: translateY(-3.6px); transition: transform .7s cubic-bezier(.22, 1, .36, 1); }
+  .lk-body { transform-box: fill-box; transform-origin: 50% 50%; }
+  .is-locked .lk-shackle { transform: none; animation: shackle-close .62s cubic-bezier(.55, 0, .25, 1) both; }
+  .is-locked .lk-body { animation: body-click .62s ease-out both; }
+  @keyframes shackle-close { 0% { transform: translateY(-3.6px); } 58% { transform: translateY(.9px); } 78% { transform: translateY(-.35px); } 100% { transform: none; } }
+  @keyframes body-click { 0%, 52% { transform: none; } 66% { transform: scale(.9); } 100% { transform: none; } }
+  .lock-host { position: relative; color: var(--accent-hi); transition: background-color .8s var(--ease) .3s, box-shadow .8s var(--ease) .3s, color .6s var(--ease) .3s; }
+  .lock-host::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 1.5px solid var(--accent-hi); opacity: 0; pointer-events: none; }
+  .lock-host.is-locked { color: #fff; background-color: rgba(47, 107, 255, 0.3); box-shadow: 0 0 0 1px rgba(109, 151, 255, 0.4), 0 0 32px -2px rgba(47, 107, 255, 0.7); }
+  .lock-host.is-locked::after { animation: lock-ring .9s var(--ease) .34s both; }
+  @keyframes lock-ring { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.7); } }
+  .lock-round { display: inline-grid; place-items: center; width: 46px; height: 46px; margin: -10px; border-radius: 99px; font-size: 26px; }
+  .fact h3 { margin-top: 12px; font-size: 1.3rem; letter-spacing: -0.02em; }
+  .fact p { margin-top: 8px; color: var(--muted); font-size: 16px; }
+  .orbit-col:first-child .fact p { margin-left: auto; }
+  .fact p { max-width: 30ch; }
+  .cert { position: relative; }
+  .cert .core { overflow: hidden; }
+  .cert-stage { position: relative; }
+  .cert-stage > img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+  /* Posição do cadeado recortado sobre a arte original (1024px): x 600, y 502, 243 x 287 */
+  .cert-lock {
+    position: absolute; left: 58.6%; top: 49%; width: 23.7%; padding: 0; border: 0; background: none; cursor: pointer;
+    transform-origin: 50% 8%; transition: transform .5s var(--ease), filter .5s var(--ease);
+    border-radius: 18px;
+  }
+  /* Sombra e brilho presos ao cadeado: acompanham o balanço */
+  .cert-lock img {
+    width: 100%; height: auto; pointer-events: none;
+    filter: drop-shadow(0 12px 14px rgba(2, 8, 24, 0.55)) drop-shadow(0 0 16px rgba(47, 107, 255, 0.45));
+    transition: filter .5s var(--ease);
+  }
+  .cert-lock:hover { transform: translateY(-2px); }
+  .cert-lock:hover img { filter: drop-shadow(0 16px 18px rgba(2, 8, 24, 0.5)) drop-shadow(0 0 22px rgba(47, 107, 255, 0.7)); }
+  .cert-lock.is-tugging { animation: tug .9s cubic-bezier(.36, .07, .19, .97); }
+  @keyframes tug {
+    0% { transform: none; }
+    14% { transform: translateY(-5px) rotate(-6deg); }
+    30% { transform: translateY(-2px) rotate(5deg); }
+    46% { transform: translateY(-3px) rotate(-3.5deg); }
+    62% { transform: translateY(-1px) rotate(2deg); }
+    80% { transform: rotate(-.8deg); }
+    100% { transform: none; }
+  }
+  .cert-cap { margin-top: 14px; text-align: center; font-size: 13.5px; color: var(--faint); min-height: 1.5em; transition: color .4s var(--ease); }
+  .cert-cap.is-on { color: var(--accent-hi); }
+  .cert::before {
+    content: ""; position: absolute; inset: -18%; z-index: -1; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(47, 107, 255, 0.28), transparent 70%);
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .cert-stage { animation: settle linear both; animation-timeline: view(); animation-range: entry 0% cover 55%; }
+      @keyframes settle { from { transform: scale(1.18); filter: brightness(0.6); } to { transform: none; filter: none; } }
+    }
+  }
+  .dossie-note { margin-top: clamp(56px, 8vw, 88px); text-align: center; font-size: clamp(1.3rem, 2.4vw, 2rem); font-weight: 500; letter-spacing: -0.02em; }
+  .dossie-note span { color: var(--muted); }
+
+  /* ---------- Prestadores ---------- */
+  .pro { padding: clamp(96px, 13vw, 168px) 0; }
+  .pro-top { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(40px, 6vw, 88px); align-items: end; }
+  .pro h2 { margin-top: 20px; font-size: clamp(2.3rem, 5vw, 4.4rem); }
+  .pro h2 em { font-style: normal; color: var(--accent-hi); }
+  .pro-lead { color: var(--muted); font-size: 19px; max-width: 42ch; }
+  .pro-lead .btn { margin-top: 28px; }
+  /* Comparador antes/depois: mesma moldura de celular nas duas camadas, a divisória corta as duas */
+  .cmp-wrap { margin: clamp(48px, 7vw, 80px) 0 0; }
+  .compare { position: relative; height: clamp(540px, 48vw, 640px); overflow: hidden; user-select: none; -webkit-user-select: none; --pos: 72%; }
+  .cmp-layer { position: absolute; inset: 0; display: grid; place-items: center; }
+  .cmp-before { background: radial-gradient(55% 70% at 30% 55%, rgba(150, 162, 186, 0.10), transparent 70%), #0c0f15; }
+  .cmp-after { background: radial-gradient(55% 70% at 70% 45%, rgba(47, 107, 255, 0.24), transparent 70%), #0a1020; clip-path: inset(0 0 0 var(--pos)); }
+  .cmp-tag { position: absolute; top: 22px; left: 24px; font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line-2); color: var(--muted); }
+  .cmp-tag-r { left: auto; right: 24px; background: var(--accent); border-color: transparent; color: #fff; }
+  .cmp-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; touch-action: pan-y; }
+  .cmp-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; pointer-events: none; background: rgba(238, 242, 248, 0.9); box-shadow: 0 0 20px rgba(47, 107, 255, 0.9); }
+  .cmp-handle span {
+    position: absolute; top: 50%; left: 50%; width: 46px; height: 46px; border-radius: 99px; transform: translate(-50%, -50%);
+    display: flex; align-items: center; justify-content: center; background: #fff; color: #10306f; font-size: 15px;
+    box-shadow: 0 10px 30px -6px rgba(0, 0, 0, 0.6), 0 0 0 6px rgba(255, 255, 255, 0.12); transition: transform .35s var(--ease);
+  }
+  .compare.is-drag .cmp-handle span { transform: translate(-50%, -50%) scale(1.12); }
+  .cmp-range:focus-visible + .cmp-handle span { outline: 2px solid var(--accent-hi); outline-offset: 4px; }
+  .cmp-cap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 10px 6px; font-size: 14px; color: var(--muted); }
+  .cmp-hint { display: inline-flex; align-items: center; gap: 8px; color: var(--faint); }
+  .cmp-hint i { font-size: 17px; }
+
+  .phone {
+    width: clamp(236px, 21vw, 276px); aspect-ratio: 9 / 18.5; padding: 9px; border-radius: 42px;
+    background: linear-gradient(160deg, #2b3242, #10141c 60%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09), 0 40px 80px -30px rgba(0, 0, 0, 0.95);
+  }
+  .screen { position: relative; height: 100%; border-radius: 34px; overflow: hidden; display: flex; flex-direction: column; font-size: 13px; line-height: 1.35; }
+  .screen::before { content: ""; position: absolute; top: 9px; left: 50%; width: 76px; height: 21px; margin-left: -38px; border-radius: 99px; background: #05070a; z-index: 1; }
+
+  .chat { background: #0e1117; }
+  .chat-head { display: flex; align-items: center; gap: 9px; padding: 40px 12px 10px; background: #151a23; border-bottom: 1px solid var(--line); }
+  .chat-head > i { font-size: 17px; color: var(--muted); }
+  .chat-av { width: 30px; height: 30px; border-radius: 99px; background: #3a4353; display: grid; place-items: center; font-weight: 600; font-size: 13px; }
+  .chat-head strong { display: block; font-size: 13.5px; font-weight: 500; }
+  .chat-head small { font-size: 11px; color: var(--faint); }
+  .chat-body { flex: 1; padding: 14px 10px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; }
+  .bub {
+    align-self: flex-start; max-width: 84%; margin: 0; padding: 8px 10px 6px; border-radius: 4px 15px 15px 15px;
+    background: #1d2330; color: #e6ebf3;
+    opacity: 0; transform: translateY(10px) scale(0.94); transform-origin: 0 100%;
+    transition: opacity .5s var(--ease), transform .7s cubic-bezier(.34, 1.4, .64, 1);
+    transition-delay: calc(var(--i) * 650ms + 250ms);
+  }
+  .bub time { display: block; margin-top: 2px; text-align: right; font-size: 10px; color: var(--faint); }
+  .bub.shout { background: #331c22; color: #ffd9d9; font-weight: 600; }
+  .bub.typing { display: flex; gap: 4px; padding: 11px 12px; }
+  .bub.typing span { width: 6px; height: 6px; border-radius: 99px; background: var(--muted); animation: typing 1.2s ease-in-out infinite; }
+  .bub.typing span:nth-child(2) { animation-delay: .15s; }
+  .bub.typing span:nth-child(3) { animation-delay: .3s; }
+  @keyframes typing { 0%, 60%, 100% { transform: none; opacity: .4; } 30% { transform: translateY(-3px); opacity: 1; } }
+  .compare.is-in .bub { opacity: 1; transform: none; }
+  .chat-input { display: flex; justify-content: space-between; align-items: center; margin: 0 8px 12px; padding: 9px 13px; border-radius: 99px; background: #151a23; color: var(--faint); font-size: 12px; }
+  .chat-input i { font-size: 16px; }
+
+  .app { background: var(--bg-2); }
+  .app-head { padding: 40px 14px 12px; }
+  .app-head small { display: block; font-size: 11px; color: var(--faint); }
+  .app-head strong { display: block; margin: 2px 0 8px; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+  .app-head .status { font-size: 11.5px; padding: 4px 9px; }
+  .app-photo { margin: 0 12px; border-radius: 14px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
+  .app-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .app-photo figcaption { display: flex; justify-content: space-between; gap: 8px; padding: 8px 10px; font-size: 11.5px; color: var(--text); }
+  .app-photo time { color: var(--faint); }
+  .app-steps { list-style: none; margin: 14px 16px 0; padding: 0; display: grid; gap: 11px; }
+  .app-steps li {
+    position: relative; display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--muted);
+    opacity: 0; transform: translateX(-8px); transition: opacity .6s var(--ease), transform .6s var(--ease); transition-delay: calc(var(--i) * 120ms + 200ms);
+  }
+  .compare.is-after .app-steps li { opacity: 1; transform: none; }
+  .app-steps li::before { content: ""; width: 9px; height: 9px; flex-shrink: 0; border-radius: 99px; border: 1.5px solid var(--accent); }
+  .app-steps .done::before { background: var(--accent); }
+  .app-steps .now { color: var(--text); font-weight: 500; }
+  .app-steps .now::before { background: var(--accent-hi); border-color: var(--accent-hi); animation: now-pulse 1.8s var(--ease) infinite; }
+  .app-steps .next { color: var(--faint); }
+  .app-steps .next::before { border-color: var(--faint); }
+  @keyframes now-pulse { 0% { box-shadow: 0 0 0 0 rgba(109, 151, 255, 0.6); } 100% { box-shadow: 0 0 0 9px rgba(109, 151, 255, 0); } }
+  .ledger { margin-top: clamp(48px, 7vw, 80px); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ledger-group { padding: 12px 36px 16px; border-radius: var(--r-xl); background: var(--surface); border: 1px solid var(--line); }
+  .ledger-group h3 { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; color: var(--faint); padding: 22px 0 6px; }
+  .ledger-item { display: grid; grid-template-columns: 40px 1fr; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .ledger-item:last-child { border-bottom: 0; }
+  .ledger-item i { font-size: 26px; color: var(--accent-hi); margin-top: 2px; }
+  .ledger-item h4 { font-size: 1.15rem; letter-spacing: -0.015em; line-height: 1.3; }
+  .ledger-item p { margin-top: 6px; font-size: 15.5px; color: var(--muted); }
+
+  /* ---------- CTA + formulário ---------- */
+  .cta { padding: clamp(80px, 10vw, 140px) 0 clamp(96px, 12vw, 160px); position: relative; }
+  .cta::before {
+    content: ""; position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); width: 90vw; height: 60vw; max-width: 1200px; max-height: 700px;
+    background: radial-gradient(closest-side, rgba(47, 107, 255, 0.14), transparent 70%); pointer-events: none;
+  }
+  .cta-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 88px); align-items: center; }
+  .cta h2 { font-size: clamp(2.4rem, 5vw, 4.4rem); max-width: 13ch; }
+  .cta-lead { margin-top: 24px; color: var(--muted); font-size: 19px; max-width: 40ch; }
+  .cta-mail { margin-top: 32px; font-size: 15px; color: var(--muted); }
+  .cta-mail a { color: var(--text); border-bottom: 1px solid var(--line-2); transition: border-color .3s var(--ease); }
+  .cta-mail a:hover { border-color: var(--accent-hi); }
+  .form-card { padding: clamp(24px, 3vw, 36px); }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); }
+  .role-btn {
+    border: 0; background: transparent; padding: 11px 10px; border-radius: 999px; cursor: pointer;
+    font-size: 14.5px; font-weight: 500; color: var(--muted); transition: background-color .4s var(--ease), color .4s var(--ease);
+  }
+  .role-btn:hover { color: var(--text); }
+  .role-btn.role-active { background: var(--surface-2); color: var(--text); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 4px 14px -6px rgba(0, 0, 0, 0.6); }
+  .fields { margin-top: 24px; display: grid; gap: 16px; }
+  .field { display: grid; gap: 8px; }
+  .field label { font-size: 14px; font-weight: 500; color: var(--text); }
+  .field input {
+    width: 100%; font: inherit; font-size: 16px; color: var(--text);
+    background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r-md); padding: 13px 16px;
+    transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .field input::placeholder { color: var(--faint); }
+  .field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(47, 107, 255, 0.2); }
+  .field input.is-invalid { border-color: var(--danger); }
+  .field-error { font-size: 13px; color: var(--danger); }
+  .consent { margin-top: 20px; display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--muted); line-height: 1.5; cursor: pointer; }
+  .consent input { margin-top: 3px; width: 17px; height: 17px; accent-color: var(--accent); flex-shrink: 0; }
+  .consent a { color: var(--accent-hi); text-decoration: underline; text-underline-offset: 2px; }
+  .form-card .btn-primary { margin-top: 22px; width: 100%; justify-content: space-between; }
+  #cta-success { text-align: center; padding: 32px 8px; }
+  #cta-success i { font-size: 52px; color: var(--accent-hi); }
+  #cta-success p { margin-top: 14px; font-size: 19px; font-weight: 500; }
+  #cta-success span { display: block; margin-top: 6px; color: var(--muted); font-size: 15px; }
+
+  /* ---------- Rodapé ---------- */
+  .foot { border-top: 1px solid var(--line); padding: 56px 0 40px; background: var(--bg-2); }
+  .foot-top { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .foot-brand img { height: 26px; width: auto; }
+  .foot-brand p { margin-top: 14px; color: var(--muted); font-size: 15px; max-width: 34ch; }
+  .foot-links { display: flex; gap: clamp(32px, 6vw, 80px); flex-wrap: wrap; }
+  .foot-links ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15px; color: var(--muted); }
+  .foot-links a { transition: color .3s var(--ease); }
+  .foot-links a:hover { color: var(--text); }
+  .foot-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--faint); }
+
+  /* ---------- Responsivo ---------- */
+  @media (max-width: 1023px) {
+    .nav-links, .nav > .btn { display: none; }
+    .burger { display: block; }
+    .hero { padding-top: 116px; min-height: 0; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .live { justify-self: start; }
+    .how-grid { grid-template-columns: 1fr; }
+    .how-visual { display: none; }
+    .step { min-height: 0; opacity: 1; padding: 32px 0; border-top: 1px solid var(--line); }
+    .step:first-child { border-top: 0; }
+    .step-img { display: block; margin-top: 22px; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 16 / 10; }
+    .step-img img { width: 100%; height: 100%; object-fit: cover; }
+    .orbit { grid-template-columns: 1fr; }
+    .orbit-col:first-child { text-align: left; }
+    .orbit-col:first-child .fact p { margin-left: 0; }
+    .cert { order: -1; max-width: 440px; margin-inline: auto; width: 100%; }
+    .orbit-col { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .pro-top, .cta-grid { grid-template-columns: 1fr; }
+    .bento { grid-template-columns: 1fr 1fr; }
+    .cell-a, .cell-d { grid-column: span 2; grid-row: auto; }
+  }
+  @media (max-width: 767px) {
+    body { font-size: 16px; }
+    .bento { grid-template-columns: 1fr; }
+    .cell-a, .cell-d { grid-column: auto; grid-row: auto; }
+    .cell { padding: 26px; }
+    .swap { grid-template-columns: 1fr; gap: 10px; padding: 22px 0; }
+    .swap .arrow { display: none; }
+    .ledger { grid-template-columns: 1fr; }
+    .ledger-group { padding: 8px 22px 12px; }
+    .orbit-col { grid-template-columns: 1fr; }
+    .band-label { display: none; }
+    .hero-ctas .btn { width: 100%; justify-content: space-between; }
+    .compare { height: 560px; }
+    .cmp-tag { top: 14px; left: 14px; font-size: 12px; padding: 6px 11px; }
+    .cmp-tag-r { left: auto; right: 14px; }
   }
 
-  ::selection { background: #1D4ED8; color: #FFFFFF; }
+  /* Menos movimento: tira deslocamentos grandes, mantém fades, o carrossel (mais lento) e o cadeado */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { transform: none; filter: none; transition: opacity .8s var(--ease); }
+    .swap .new { transform: none; }
+    .how-frame img { transform: none; }
+    .marquee-track { animation-duration: 80s; }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .nav, .menu { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--bg-2); }
+  }
 </style>
 </head>
 
-<body class="font-inter bg-car-bg text-car-text antialiased">
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="progress" aria-hidden="true"></div>
 
-<!-- HEADER / NAVBAR -->
-<header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b border-transparent bg-white/80 backdrop-blur">
-  <nav class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-    <a href="#top" class="flex items-center">
-      <img src="assets/logo-care.png" alt="CAR.e" class="h-7 w-auto sm:h-8">
-    </a>
-
-    <div class="hidden md:flex items-center gap-7 text-sm font-medium text-car-muted">
-      <a href="#como-funciona" class="hover:text-car-navy transition-colors">Como Funciona</a>
-      <a href="#seguranca" class="hover:text-car-navy transition-colors">Segurança</a>
-      <a href="#prestadores" class="hover:text-car-navy transition-colors">Para Prestadores</a>
-      <a href="#motoristas" class="hover:text-car-navy transition-colors">Para Motoristas</a>
+<!-- NAVEGAÇÃO -->
+<header>
+  <nav class="nav" id="navbar" aria-label="Principal">
+    <a href="#top" class="nav-logo"><img src="assets/logo-care-light.png" alt="CAR.e" width="820" height="240"></a>
+    <div class="nav-links">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#seguranca">Segurança</a>
+      <a href="#prestadores">Para prestadores</a>
+      <a href="#motoristas">Para motoristas</a>
     </div>
-
-    <a href="#cta-final" class="hidden md:inline-flex items-center gap-1.5 rounded-full bg-car-blue px-5 py-2 text-sm font-semibold text-white hover:bg-car-bluedark transition-colors">
-      Quero Testar
-    </a>
-
-    <button id="menu-btn" aria-label="Abrir menu" class="md:hidden text-car-navy">
-      <svg id="icon-menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
-        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
-      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 hidden">
-        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
-    </button>
+    <a href="#cta-final" class="btn btn-primary btn-sm">Quero testar <span class="btn-ic"><i class="ph-light ph-arrow-right"></i></span></a>
+    <button class="burger" id="menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
   </nav>
 
-  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-car-border px-5 pb-6 pt-2">
-    <div class="flex flex-col gap-4 text-sm font-medium">
-      <a href="#como-funciona" class="py-2 text-car-muted hover:text-car-navy">Como Funciona</a>
-      <a href="#seguranca" class="py-2 text-car-muted hover:text-car-navy">Segurança</a>
-      <a href="#prestadores" class="py-2 text-car-muted hover:text-car-navy">Para Prestadores</a>
-      <a href="#motoristas" class="py-2 text-car-muted hover:text-car-navy">Para Motoristas</a>
-      <a href="#cta-final" class="mt-1 inline-flex justify-center items-center rounded-full bg-car-blue px-5 py-2.5 font-semibold text-white">Quero Testar</a>
-    </div>
+  <div class="menu" id="mobile-menu" aria-hidden="true">
+    <a class="menu-link" href="#como-funciona" style="--i:0">Como funciona</a>
+    <a class="menu-link" href="#seguranca" style="--i:1">Segurança</a>
+    <a class="menu-link" href="#prestadores" style="--i:2">Para prestadores</a>
+    <a class="menu-link" href="#motoristas" style="--i:3">Para motoristas</a>
+    <a href="#cta-final" class="btn btn-primary" style="--i:4">Quero testar <span class="btn-ic"><i class="ph-light ph-arrow-right"></i></span></a>
   </div>
 </header>
 
 <main id="top">
 
   <!-- HERO -->
-  <section class="relative overflow-hidden bg-grid pt-32 pb-20 sm:pt-40 sm:pb-28">
-    <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-car-blue/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-40 right-0 w-[400px] h-[400px] bg-car-blue/10 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="relative max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-16 items-center">
+  <section class="hero" id="conteudo">
+    <div class="wrap hero-grid">
       <div>
-        <span class="inline-flex items-center gap-2 rounded-full border border-car-border bg-white px-4 py-1.5 text-xs font-medium text-car-muted shadow-sm">
-          <span class="w-1.5 h-1.5 rounded-full bg-car-blue animate-pulse"></span>
-          Protocolo Digital de Procedência Veicular
-        </span>
-
-        <h1 class="font-sora mt-6 text-4xl sm:text-5xl lg:text-[3.4rem] leading-[1.1] font-bold tracking-tight text-car-navy">
-          O fim da <span class="text-gradient">incerteza</span> na hora de consertar o seu veículo.
-        </h1>
-
-        <p class="mt-6 text-lg text-car-muted leading-relaxed max-w-xl">
-          O CAR.e monitora seu serviço com qualquer prestador automotivo em tempo real e emite um <span class="text-car-navy font-medium">dossiê digital com certificado de autenticidade</span> para o seu veículo — carro, moto, caminhonete ou caminhão — do primeiro reparo até a revenda.
-        </p>
-
-        <div class="mt-8 flex flex-col sm:flex-row gap-4">
-          <a href="#cta-final" class="inline-flex items-center justify-center gap-2 rounded-xl bg-car-blue px-6 py-3.5 font-semibold text-white shadow-glow-blue hover:bg-car-bluedark transition">
-            Sou Motorista — Quero Transparência
-          </a>
-          <a href="#cta-final" class="inline-flex items-center justify-center gap-2 rounded-xl bg-car-navy px-6 py-3.5 font-semibold text-white hover:bg-car-deep transition">
-            Sou Prestador de Serviço — Otimizar meu Tempo
-          </a>
-        </div>
-
-        <div class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-car-muted">
-          <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>Rastreio em tempo real</span>
-          <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>Certificado Digital CAR.e</span>
-          <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>Para todo tipo de veículo</span>
+        <span class="eyebrow reveal">Protocolo digital de procedência veicular</span>
+        <h1 class="reveal" style="--d:1">O fim da <span class="strike">incerteza</span>.</h1>
+        <p class="hero-sub reveal" style="--d:2">Na hora de consertar seu veículo, você acompanha tudo ao vivo e recebe um <strong>dossiê que ninguém pode editar</strong>.</p>
+        <div class="hero-ctas reveal" style="--d:3">
+          <a href="#cta-final" class="btn btn-primary">Quero testar <span class="btn-ic"><i class="ph-light ph-arrow-right"></i></span></a>
+          <a href="#prestadores" class="link-arrow">Sou prestador de serviço <i class="ph-light ph-arrow-right"></i></a>
         </div>
       </div>
 
-      <!-- Mockup Card -->
-      <div class="relative flex justify-center lg:justify-end">
-        <div class="animate-float w-full max-w-sm rounded-2xl border border-car-border bg-white/95 backdrop-blur p-5 shadow-card">
-          <div class="flex items-center justify-between border-b border-car-border pb-4">
+      <div class="live shell reveal" style="--d:2" id="live">
+        <div class="core">
+          <div class="live-head">
             <div>
-              <p class="text-xs text-car-muted">Ordem de Serviço</p>
-              <p class="font-sora font-semibold text-car-navy">#4821 · Civic 2019</p>
+              <small class="mono">OS 4821</small>
+              <strong>Honda Civic 2019 · Revisão</strong>
             </div>
-            <span class="rounded-full bg-car-blue/10 text-car-blue text-xs font-medium px-3 py-1">Em execução</span>
+            <span class="status" id="live-status"><i class="ph-light ph-circle-notch"></i> <span>Em execução</span></span>
           </div>
-
-          <div class="mt-4 space-y-3">
-            <div class="flex items-center gap-3">
-              <span class="h-2.5 w-2.5 rounded-full bg-car-blue shrink-0"></span>
-              <div class="flex-1 flex items-center justify-between text-sm">
-                <span>Check-in realizado</span>
-                <span class="text-car-muted text-xs">08:12</span>
+          <ol class="timeline">
+            <li class="ev">
+              <div class="ev-row"><span>Check-in com fotos</span><time class="mono">08:12</time></div>
+              <p>KM <span class="mono">84.212</span> registrado antes de tocar no veículo</p>
+              <div class="thumbs">
+                <img src="assets/servico-foto-3.jpg" alt="Motor aberto no check-in" loading="eager">
+                <img src="assets/servico-foto-4.jpg" alt="Velas de ignição antes da troca" loading="eager">
               </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="h-2.5 w-2.5 rounded-full bg-car-blue shrink-0"></span>
-              <div class="flex-1 flex items-center justify-between text-sm">
-                <span>Diagnóstico enviado</span>
-                <span class="text-car-muted text-xs">09:40</span>
+            </li>
+            <li class="ev">
+              <div class="ev-row"><span>Diagnóstico enviado</span><time class="mono">09:40</time></div>
+              <p>Pastilhas de freio no limite</p>
+            </li>
+            <li class="ev">
+              <div class="ev-row"><span>Orçamento adicional <span class="mono">R$ 380,00</span></span><time class="mono">10:05</time></div>
+              <p class="who">Aprovado por você, no app</p>
+            </li>
+            <li class="ev">
+              <div class="ev-row"><span>Peças substituídas</span><time class="mono">13:22</time></div>
+              <div class="thumbs">
+                <img src="assets/servico-foto-1.jpg" alt="Troca da pastilha de freio" loading="eager">
+                <img src="assets/servico-foto-2.jpg" alt="Filtro de ar antigo ao lado do novo" loading="eager">
               </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="h-2.5 w-2.5 rounded-full bg-car-navy shrink-0 ring-4 ring-car-navy/10"></span>
-              <div class="flex-1 flex items-center justify-between text-sm">
-                <span class="font-medium">Peça substituída · 4 fotos</span>
-                <span class="text-car-navy text-xs">agora</span>
-              </div>
-            </div>
-            <div class="flex items-center gap-3 opacity-50">
-              <span class="h-2.5 w-2.5 rounded-full bg-car-muted shrink-0"></span>
-              <div class="flex-1 flex items-center justify-between text-sm">
-                <span>Revisão final</span>
-                <span class="text-car-muted text-xs">pendente</span>
-              </div>
-            </div>
+            </li>
+            <li class="ev">
+              <div class="ev-row"><span>Serviço concluído</span><time class="mono">16:48</time></div>
+              <p>Confirmado pelo prestador e por você</p>
+            </li>
+          </ol>
+          <div class="seal" id="live-seal">
+            <i class="ph-fill ph-seal-check"></i>
+            <div><strong>Registrado no dossiê do veículo</strong><span>Com fotos, datas e responsáveis</span></div>
           </div>
-
-          <div class="mt-5 flex gap-2">
-            <div class="h-14 flex-1 rounded-lg overflow-hidden border border-car-border">
-              <img src="assets/servico-foto-1.jpg" alt="Foto do check-in: troca de pastilha de freio" class="w-full h-full object-cover" loading="lazy">
-            </div>
-            <div class="h-14 flex-1 rounded-lg overflow-hidden border border-car-border">
-              <img src="assets/servico-foto-2.jpg" alt="Foto do check-in: filtro de ar antigo e novo" class="w-full h-full object-cover" loading="lazy">
-            </div>
-            <div class="h-14 flex-1 rounded-lg overflow-hidden border border-car-border">
-              <img src="assets/servico-foto-3.jpg" alt="Foto do check-in: peça do motor sendo substituída" class="w-full h-full object-cover" loading="lazy">
-            </div>
-            <div class="h-14 flex-1 rounded-lg overflow-hidden border border-car-border">
-              <img src="assets/servico-foto-4.jpg" alt="Foto do check-in: vela de ignição antiga e nova" class="w-full h-full object-cover" loading="lazy">
-            </div>
-          </div>
-
-          <p class="mt-4 text-xs text-car-muted flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Protegido pelo Dossiê Digital CAR.e
-          </p>
         </div>
+        <p class="live-cap">Exemplo de acompanhamento no app <button class="replay" id="replay" type="button">Ver de novo</button></p>
       </div>
     </div>
   </section>
 
-  <!-- QUALQUER VEÍCULO -->
-  <section class="py-10 border-t border-b border-car-border bg-car-bgsoft">
-    <div class="max-w-5xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 text-center sm:text-left">
-      <img src="assets/veiculos-care.png" alt="Ícones de carro, moto, caminhonete e caminhão" class="h-14 sm:h-16 w-auto">
-      <p class="text-sm sm:text-base text-car-muted max-w-xl">
-        <span class="font-semibold text-car-navy">Qualquer veículo automotor tem lugar no CAR.e:</span> carros, motos, caminhonetes, caminhões e afins.
-      </p>
-    </div>
-  </section>
-
-  <!-- PROBLEMA VS SOLUÇÃO -->
-  <section class="py-24 border-t border-car-border">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="reveal max-w-2xl mx-auto text-center">
-        <span class="text-sm font-semibold text-car-blue">O Problema</span>
-        <h2 class="font-sora mt-3 text-3xl sm:text-4xl font-bold text-car-navy">Hoje, consertar o veículo é um ato de fé.</h2>
-        <p class="mt-4 text-car-muted">Sem visibilidade do que está sendo feito, motorista e prestador de serviço perdem tempo, confiança e dinheiro.</p>
-      </div>
-
-      <div class="reveal mt-14 grid md:grid-cols-2 gap-6">
-        <div class="rounded-2xl border border-car-border bg-white p-8">
-          <h3 class="font-sora text-xl font-semibold text-car-muted">Hoje</h3>
-          <ul class="mt-6 space-y-4">
-            <li class="flex gap-3 text-car-muted">
-              <svg class="w-5 h-5 text-red-500/80 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-              Grupo de WhatsApp bagunçado, sem organização
-            </li>
-            <li class="flex gap-3 text-car-muted">
-              <svg class="w-5 h-5 text-red-500/80 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-              "Tá pronto?" repetido a cada 10 minutos
-            </li>
-            <li class="flex gap-3 text-car-muted">
-              <svg class="w-5 h-5 text-red-500/80 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-              Nenhuma prova real do serviço realizado
-            </li>
-            <li class="flex gap-3 text-car-muted">
-              <svg class="w-5 h-5 text-red-500/80 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-              Histórico do veículo se perde na hora da venda
-            </li>
+  <!-- CATEGORIAS DE VEÍCULO E PRESTADOR -->
+  <div class="band" aria-label="Veículos e prestadores atendidos">
+    <div class="band-inner">
+      <p class="band-label">Qualquer veículo automotor</p>
+      <div class="marquee">
+        <div class="marquee-track">
+          <ul>
+            <li><i class="ph-light ph-car-profile"></i>Carros</li>
+            <li><i class="ph-light ph-motorcycle"></i>Motos</li>
+            <li><i class="ph-light ph-jeep"></i>Caminhonetes</li>
+            <li><i class="ph-light ph-truck"></i>Caminhões</li>
+            <li><i class="ph-light ph-wrench"></i>Oficina mecânica</li>
+            <li><i class="ph-light ph-lightning"></i>Elétrica automotiva</li>
+            <li><i class="ph-light ph-tire"></i>Borracharia</li>
+            <li><i class="ph-light ph-drop"></i>Troca de óleo</li>
+            <li><i class="ph-light ph-sparkle"></i>Estética e detailing</li>
+            <li><i class="ph-light ph-shower"></i>Lava-rápido</li>
+            <li><i class="ph-light ph-paint-roller"></i>Funilaria e pintura</li>
+          </ul>
+          <ul aria-hidden="true">
+            <li><i class="ph-light ph-car-profile"></i>Carros</li>
+            <li><i class="ph-light ph-motorcycle"></i>Motos</li>
+            <li><i class="ph-light ph-jeep"></i>Caminhonetes</li>
+            <li><i class="ph-light ph-truck"></i>Caminhões</li>
+            <li><i class="ph-light ph-wrench"></i>Oficina mecânica</li>
+            <li><i class="ph-light ph-lightning"></i>Elétrica automotiva</li>
+            <li><i class="ph-light ph-tire"></i>Borracharia</li>
+            <li><i class="ph-light ph-drop"></i>Troca de óleo</li>
+            <li><i class="ph-light ph-sparkle"></i>Estética e detailing</li>
+            <li><i class="ph-light ph-shower"></i>Lava-rápido</li>
+            <li><i class="ph-light ph-paint-roller"></i>Funilaria e pintura</li>
           </ul>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="rounded-2xl border border-car-blue/30 bg-gradient-to-b from-car-blue/5 to-transparent p-8 shadow-glow-blue">
-          <h3 class="font-sora text-xl font-semibold text-gradient">Com o CAR.e</h3>
-          <ul class="mt-6 space-y-4">
-            <li class="flex gap-3 text-car-navy">
-              <svg class="w-5 h-5 text-car-blue shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
-              Timeline organizada e automática
-            </li>
-            <li class="flex gap-3 text-car-navy">
-              <svg class="w-5 h-5 text-car-blue shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
-              Fotos e status em tempo real, sem precisar perguntar
-            </li>
-            <li class="flex gap-3 text-car-navy">
-              <svg class="w-5 h-5 text-car-blue shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
-              Dossiê com certificado comprova cada serviço
-            </li>
-            <li class="flex gap-3 text-car-navy">
-              <svg class="w-5 h-5 text-car-blue shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
-              Histórico valoriza o veículo na revenda
-            </li>
-          </ul>
+  <!-- PROBLEMA -->
+  <section class="problem">
+    <div class="wrap">
+      <h2 class="reveal">Hoje, consertar o veículo é um ato de fé.</h2>
+      <p class="problem-lead reveal" style="--d:1">Sem ver o que está sendo feito, motorista e prestador de serviço perdem tempo, confiança e dinheiro. O CAR.e troca a fé por registro.</p>
+
+      <div class="swaps" id="swaps">
+        <div class="swap" style="--i:0">
+          <span class="old">Grupo de WhatsApp bagunçado</span>
+          <i class="ph-light ph-arrow-right arrow" aria-hidden="true"></i>
+          <span class="new"><i class="ph-light ph-list-checks"></i>Linha do tempo organizada e automática</span>
+        </div>
+        <div class="swap" style="--i:1">
+          <span class="old">“Tá pronto?” a cada 10 minutos</span>
+          <i class="ph-light ph-arrow-right arrow" aria-hidden="true"></i>
+          <span class="new"><i class="ph-light ph-broadcast"></i>Status e fotos ao vivo, sem precisar perguntar</span>
+        </div>
+        <div class="swap" style="--i:2">
+          <span class="old">Nenhuma prova do serviço feito</span>
+          <i class="ph-light ph-arrow-right arrow" aria-hidden="true"></i>
+          <span class="new"><i class="ph-light ph-camera"></i>Cada etapa com foto, data e responsável</span>
+        </div>
+        <div class="swap" style="--i:3">
+          <span class="old">Histórico que some na hora da venda</span>
+          <i class="ph-light ph-arrow-right arrow" aria-hidden="true"></i>
+          <span class="new"><i class="ph-light ph-folder-lock"></i>Um dossiê que acompanha o veículo</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- COMO FUNCIONA / MOTORISTAS -->
-  <section id="motoristas" class="py-24 border-t border-car-border bg-car-bgsoft">
-    <div id="como-funciona" class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="reveal max-w-2xl mx-auto text-center">
-        <span class="text-sm font-semibold text-car-blue">O Coração do Produto</span>
-        <h2 class="font-sora mt-3 text-3xl sm:text-4xl font-bold text-car-navy">Como funciona o Dossiê Digital</h2>
-        <p class="mt-4 text-car-muted">Em três passos simples, cada serviço vira um registro permanente e verificável.</p>
-      </div>
+  <section class="how" id="motoristas">    <div class="wrap" id="como-funciona">
+      <h2 class="reveal">Do check-in ao dossiê, sem você precisar perguntar nada.</h2>
 
-      <div class="reveal mt-16 grid md:grid-cols-3 gap-8 relative">
-        <div class="hidden md:block absolute top-8 left-[16.6%] right-[16.6%] h-px bg-gradient-to-r from-car-blue via-car-navy to-car-blue/30"></div>
-
-        <div class="relative text-center">
-          <div class="relative z-10 mx-auto w-16 h-16 rounded-2xl bg-white border border-car-border flex items-center justify-center shadow-sm">
-            <svg class="w-7 h-7 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          </div>
-          <p class="mt-5 text-xs font-semibold text-car-muted">PASSO 1</p>
-          <h3 class="font-sora mt-1 text-lg font-semibold text-car-navy">Check-in e Foto Inicial</h3>
-          <p class="mt-2 text-sm text-car-muted leading-relaxed">O profissional abre a ordem de serviço no CAR.e e registra o estado do veículo com fotos, antes de tocar em qualquer peça.</p>
-        </div>
-
-        <div class="relative text-center">
-          <div class="relative z-10 mx-auto w-16 h-16 rounded-2xl bg-white border border-car-border flex items-center justify-center shadow-sm">
-            <svg class="w-7 h-7 text-car-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
-          </div>
-          <p class="mt-5 text-xs font-semibold text-car-muted">PASSO 2</p>
-          <h3 class="font-sora mt-1 text-lg font-semibold text-car-navy">Rastreio em Tempo Real</h3>
-          <p class="mt-2 text-sm text-car-muted leading-relaxed">Você acompanha cada etapa direto no App CAR.e: diagnóstico, peças, fotos do progresso e previsão de entrega — sem precisar perguntar nada.</p>
-        </div>
-
-        <div class="relative text-center">
-          <div class="relative z-10 mx-auto w-16 h-16 rounded-2xl bg-white border border-car-border flex items-center justify-center shadow-sm">
-            <svg class="w-7 h-7 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-          </div>
-          <p class="mt-5 text-xs font-semibold text-car-muted">PASSO 3</p>
-          <h3 class="font-sora mt-1 text-lg font-semibold text-car-navy">Dossiê Certificado para Sempre</h3>
-          <p class="mt-2 text-sm text-car-muted leading-relaxed">Cada serviço é registrado no histórico digital do veículo, criando um dossiê com certificado que comprova a procedência e valoriza a revenda.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEGURANÇA E CERTIFICADO DIGITAL -->
-  <section id="seguranca" class="py-24 border-t border-car-border">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="reveal max-w-2xl mx-auto text-center">
-        <span class="text-sm font-semibold text-car-blue">Segurança e Confiança</span>
-        <h2 class="font-sora mt-3 text-3xl sm:text-4xl font-bold text-car-navy">Um Certificado Digital que protege os dois lados</h2>
-        <p class="mt-4 text-car-muted">Cada serviço registrado no CAR.e gera um certificado com autenticidade verificável — impossível de adulterar, fácil de conferir.</p>
-      </div>
-
-      <div class="reveal mt-16 grid lg:grid-cols-2 gap-14 items-center">
-        <div class="relative flex justify-center">
-          <div class="absolute inset-0 bg-car-blue/10 rounded-full blur-3xl"></div>
-          <div class="relative rounded-3xl border border-car-border bg-white p-6 sm:p-10 shadow-card">
-            <img src="assets/certificado-care.png" alt="Certificado Digital CAR.e com selo de segurança e cadeado" class="w-full max-w-sm mx-auto">
-            <p class="mt-4 text-center text-xs font-medium text-car-muted flex items-center justify-center gap-1.5">
-              <svg class="w-3.5 h-3.5 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Certificado Digital CAR.e · Registro Verificável
-            </p>
+      <div class="how-grid">
+        <div class="how-visual">
+          <div class="shell">
+            <div class="core" style="padding:0; overflow:hidden">
+              <div class="how-frame">
+                <img src="assets/servico-foto-3.jpg" alt="Técnico com chave de boca diante do motor aberto" class="is-on" data-step="0">
+                <img src="assets/servico-foto-1.jpg" alt="Pastilha de freio sendo trocada" data-step="1">
+                <img src="assets/certificado-care.png" alt="Certificado digital CAR.e com selo e cadeado" data-step="2">
+              </div>
+            </div>
+            <div class="how-cap"><span id="how-cap">Estado do veículo registrado na chegada</span><span class="mono" id="how-count">1 de 3</span></div>
           </div>
         </div>
 
-        <div class="space-y-8">
-          <div class="flex gap-4">
-            <div class="shrink-0 w-12 h-12 rounded-xl bg-car-bgsoft border border-car-border flex items-center justify-center">
-              <svg class="w-6 h-6 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <ol class="steps">
+          <li class="step is-active" data-step="0">
+            <div class="step-ic"><i class="ph-light ph-camera"></i></div>
+            <h3>Check-in com fotos e quilometragem</h3>
+            <p>O profissional abre a ordem de serviço no CAR.e e registra o estado do veículo antes de tocar em qualquer peça.</p>
+            <div class="step-img"><img src="assets/servico-foto-3.jpg" alt="Técnico com chave de boca diante do motor aberto" loading="lazy"></div>
+          </li>
+          <li class="step" data-step="1">
+            <div class="step-ic"><i class="ph-light ph-device-mobile"></i></div>
+            <h3>Você acompanha ao vivo</h3>
+            <p>Diagnóstico, fotos do andamento e previsão de entrega no app, com chat que já sabe de qual veículo se trata. Apareceu algo a mais? O orçamento adicional só segue com o seu sim.</p>
+            <div class="step-img"><img src="assets/servico-foto-1.jpg" alt="Pastilha de freio sendo trocada" loading="lazy"></div>
+          </li>
+          <li class="step" data-step="2">
+            <div class="step-ic lock-host" id="step-lock">
+              <svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><path class="lk-shackle" d="M8 11V7.5a4 4 0 0 1 8 0V11"/><g class="lk-body"><rect x="5" y="11" width="14" height="10" rx="2.2"/><path d="M12 15v2.6"/></g></svg>
             </div>
-            <div>
-              <h3 class="font-sora font-semibold text-car-navy">Registro Imutável</h3>
-              <p class="mt-1.5 text-sm text-car-muted leading-relaxed">Cada etapa do serviço é registrada com data, hora e responsável. Nada pode ser editado ou apagado depois do fato.</p>
-            </div>
-          </div>
-
-          <div class="flex gap-4">
-            <div class="shrink-0 w-12 h-12 rounded-xl bg-car-bgsoft border border-car-border flex items-center justify-center">
-              <svg class="w-6 h-6 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-9M14 17H5M17 4l3 3-3 3M7 14l-3 3 3 3"/></svg>
-            </div>
-            <div>
-              <h3 class="font-sora font-semibold text-car-navy">Protege o Prestador de Serviço</h3>
-              <p class="mt-1.5 text-sm text-car-muted leading-relaxed">O certificado comprova que o serviço foi realizado como prometido, evitando contestações injustas e protegendo sua reputação.</p>
-            </div>
-          </div>
-
-          <div class="flex gap-4">
-            <div class="shrink-0 w-12 h-12 rounded-xl bg-car-bgsoft border border-car-border flex items-center justify-center">
-              <svg class="w-6 h-6 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            </div>
-            <div>
-              <h3 class="font-sora font-semibold text-car-navy">Protege o Motorista</h3>
-              <p class="mt-1.5 text-sm text-car-muted leading-relaxed">Você tem prova de tudo o que foi feito no seu veículo, evitando fraudes e valorizando a procedência na hora de vender.</p>
-            </div>
-          </div>
-        </div>
+            <h3>Dupla confirmação, dossiê selado</h3>
+            <p>O prestador conclui, você confere o extrato e confirma. Só então o serviço entra no histórico do veículo, com Certificado CAR.e e PDF para baixar quando quiser.</p>
+            <div class="step-img"><img src="assets/certificado-care.png" alt="Certificado digital CAR.e com selo e cadeado" loading="lazy"></div>
+          </li>
+        </ol>
       </div>
     </div>
   </section>
 
-  <!-- PARA PRESTADORES DE SERVIÇO (B2B) -->
-  <section id="prestadores" class="py-24 border-t border-car-border bg-car-bgsoft">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="reveal grid lg:grid-cols-2 gap-12 items-center">
+  <!-- RESPONSABILIDADE COMPARTILHADA / SEGURANÇA -->
+  <section class="duty" id="seguranca">
+    <div class="wrap">
+      <h2 class="reveal">Quem autorizou o quê, e quando. Tudo registrado.</h2>
+      <p class="duty-lead reveal" style="--d:1">A transparência protege os dois lados. O motorista não paga pelo que não aprovou, e o prestador não responde por um reparo que o cliente recusou.</p>
+
+      <div class="bento">
+        <article class="cell cell-a reveal">
+          <div>
+            <h3>O orçamento adicional só segue com o seu sim.</h3>
+            <p>Achou outro problema no meio do serviço? O prestador envia o orçamento pelo app e a sua decisão fica gravada com data e hora.</p>
+          </div>
+          <div class="approve shell">
+            <div class="core approve-card">
+              <div class="approve-top"><small class="mono">Orçamento adicional</small><strong class="mono">R$ 380,00</strong></div>
+              <p class="approve-item">Troca das pastilhas de freio dianteiras</p>
+              <div class="approve-actions">
+                <button type="button" class="no" data-answer="no">Recusar</button>
+                <button type="button" class="yes" data-answer="yes">Aprovar</button>
+              </div>
+              <p class="approve-log" id="approve-log" aria-live="polite"><i class="ph-light ph-hand-pointing"></i><span>Toque para ver o que fica registrado</span></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="cell reveal" style="--d:1">
+          <i class="ph-light ph-shield-warning cell-ic"></i>
+          <h3>O prestador pode recusar liberar um reparo inseguro.</h3>
+          <p>Se o cliente recusa parte de um conserto de freio, a recusa fica registrada. A responsabilidade não cai sobre quem avisou.</p>
+        </article>
+
+        <article class="cell reveal" style="--d:2">
+          <i class="ph-light ph-receipt-x cell-ic"></i>
+          <h3>Nenhuma cobrança sem aprovação.</h3>
+          <p>Serviço não aprovado no app não entra na conta. E a falta de aprovação também fica registrada.</p>
+        </article>
+
+        <article class="cell cell-d reveal">
+          <div>
+            <h3>Antes de fechar, você confere o extrato.</h3>
+            <p>Serviço, técnico, valor, adicionais e fotos. Se algo não bater, o prestador é avisado na hora.</p>
+          </div>
+          <div class="choices" aria-hidden="true">
+            <span class="chip-demo solid"><i class="ph-light ph-check"></i>Está correto</span>
+            <span class="chip-demo"><i class="ph-light ph-warning"></i>Está diferente</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOSSIÊ -->
+  <section class="dossie" id="dossie">
+    <div class="wrap">
+      <div class="dossie-head">
+        <h2 class="reveal">Um histórico que ninguém inventa.</h2>
+        <p class="reveal" style="--d:1">O dossiê não é preenchido por ninguém. Ele nasce do serviço feito de verdade, etapa por etapa, dentro do app.</p>
+      </div>
+
+      <div class="orbit">
+        <div class="orbit-col">
+          <div class="fact reveal">
+            <i class="ph-light ph-gear-six"></i>
+            <h3>Gerado pelo sistema</h3>
+            <p>Cada registro vem do próprio serviço: check-in, fotos, orçamentos e conclusão.</p>
+          </div>
+          <div class="fact reveal" style="--d:1">
+            <span class="lock-host lock-round" id="fact-lock">
+              <svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><path class="lk-shackle" d="M8 11V7.5a4 4 0 0 1 8 0V11"/><g class="lk-body"><rect x="5" y="11" width="14" height="10" rx="2.2"/><path d="M12 15v2.6"/></g></svg>
+            </span>
+            <h3>Ninguém edita</h3>
+            <p>Nem o prestador, nem o dono conseguem alterar um serviço fechado.</p>
+          </div>
+        </div>
+
+        <div class="cert reveal">
+          <div class="shell">
+            <div class="core">
+              <div class="cert-stage">
+                <img src="assets/certificado-base.jpg?v=3" alt="Certificado digital CAR.e com selo de segurança" loading="lazy" width="880" height="880">
+                <button type="button" class="cert-lock" id="cert-lock" aria-label="Cadeado do certificado: selado, não pode ser aberto">
+                  <img src="assets/certificado-cadeado.png" alt="" width="209" height="247">
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="cert-cap" id="cert-cap" aria-live="polite">Abra o cadeado</p>
+        </div>
+
+        <div class="orbit-col">
+          <div class="fact reveal" style="--d:1">
+            <i class="ph-light ph-users-three"></i>
+            <h3>Dupla confirmação</h3>
+            <p>Só entra no dossiê o serviço confirmado pelo prestador e pelo dono.</p>
+          </div>
+          <div class="fact reveal" style="--d:2">
+            <i class="ph-light ph-file-pdf"></i>
+            <h3>PDF quando quiser</h3>
+            <p>Baixe o dossiê do serviço pelo app, a qualquer momento.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="dossie-note reveal">Veículo bem cuidado vale mais na revenda. <span>Agora dá para provar.</span></p>
+    </div>
+  </section>
+
+  <!-- PRESTADORES -->
+  <section class="pro" id="prestadores">
+    <div class="wrap">
+      <div class="pro-top">
         <div>
-          <span class="text-sm font-semibold text-car-blue">Para Prestadores de Serviço Automotivo</span>
-          <h2 class="font-sora mt-3 text-3xl sm:text-4xl font-bold leading-tight text-car-navy">Pare de responder <span class="text-gradient">"tá pronto?"</span> no WhatsApp a cada 10 minutos.</h2>
-          <p class="mt-4 text-car-muted leading-relaxed">O CAR.e automatiza a comunicação com o cliente e ainda coloca seu negócio na vitrine certa — liberando tempo para o que importa: o veículo.</p>
-
-          <div class="mt-5 flex flex-wrap gap-2">
-            <span class="inline-flex items-center rounded-full bg-car-blue/10 text-car-blue text-xs font-medium px-3 py-1.5">Oficina Mecânica</span>
-            <span class="inline-flex items-center rounded-full bg-car-blue/10 text-car-blue text-xs font-medium px-3 py-1.5">Elétrica Automotiva</span>
-            <span class="inline-flex items-center rounded-full bg-car-blue/10 text-car-blue text-xs font-medium px-3 py-1.5">Borracharia</span>
-            <span class="inline-flex items-center rounded-full bg-car-blue/10 text-car-blue text-xs font-medium px-3 py-1.5">Troca de Óleo</span>
-            <span class="inline-flex items-center rounded-full bg-car-blue/10 text-car-blue text-xs font-medium px-3 py-1.5">Lava-Rápido</span>
-            <span class="inline-flex items-center rounded-full bg-car-blue/10 text-car-blue text-xs font-medium px-3 py-1.5">Estética / Detailing</span>
-            <span class="inline-flex items-center rounded-full bg-car-blue/10 text-car-blue text-xs font-medium px-3 py-1.5">Funilaria e Pintura</span>
-            <span class="inline-flex items-center rounded-full bg-car-blue/10 text-car-blue text-xs font-medium px-3 py-1.5">e muito mais</span>
-          </div>
-
-          <a href="#cta-final" class="mt-8 inline-flex items-center gap-2 rounded-xl bg-car-blue px-6 py-3.5 font-semibold text-white shadow-glow-blue hover:bg-car-bluedark transition">
-            Quero testar no meu negócio
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
+          <span class="eyebrow reveal">Para prestadores de serviço</span>
+          <h2 class="reveal" style="--d:1">Pare de responder <em>“tá pronto?”</em> no WhatsApp.</h2>
         </div>
-
-        <div class="grid sm:grid-cols-2 gap-5">
-          <div class="rounded-2xl border border-car-border bg-white p-6">
-            <svg class="w-6 h-6 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <h3 class="font-sora mt-4 font-semibold text-car-navy">Menos Interrupções</h3>
-            <p class="mt-2 text-sm text-car-muted">Reduza drasticamente as ligações e mensagens perguntando sobre o andamento do serviço.</p>
-          </div>
-          <div class="rounded-2xl border border-car-border bg-white p-6">
-            <svg class="w-6 h-6 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            <h3 class="font-sora mt-4 font-semibold text-car-navy">Clientes mais Fiéis</h3>
-            <p class="mt-2 text-sm text-car-muted">Transparência gera confiança. Cliente satisfeito volta e indica seu negócio.</p>
-          </div>
-          <div class="rounded-2xl border border-car-border bg-white p-6">
-            <svg class="w-6 h-6 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-            <h3 class="font-sora mt-4 font-semibold text-car-navy">Imagem Profissional</h3>
-            <p class="mt-2 text-sm text-car-muted">Ofereça uma experiência digital moderna, à altura de concessionárias, sem custo alto.</p>
-          </div>
-          <div class="rounded-2xl border border-car-border bg-white p-6">
-            <svg class="w-6 h-6 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-            <h3 class="font-sora mt-4 font-semibold text-car-navy">Mais Produtividade</h3>
-            <p class="mt-2 text-sm text-car-muted">Sua equipe foca em cuidar dos veículos, não em redigitar a mesma resposta.</p>
-          </div>
+        <div class="pro-lead reveal" style="--d:2">
+          <p>O CAR.e avisa o cliente a cada etapa e coloca o seu trabalho na vitrine certa. Sua equipe volta a cuidar do que importa: o veículo.</p>
+          <a href="#cta-final" class="btn btn-primary">Quero testar <span class="btn-ic"><i class="ph-light ph-arrow-right"></i></span></a>
         </div>
       </div>
 
-      <!-- FERRAMENTAS DO PAINEL WEB -->
-      <div class="reveal mt-20 pt-16 border-t border-car-border">
-        <div class="max-w-2xl mx-auto text-center">
-          <span class="text-sm font-semibold text-car-blue">Painel Web do Prestador</span>
-          <h3 class="font-sora mt-3 text-2xl sm:text-3xl font-bold text-car-navy">Tudo que seu negócio precisa, num só lugar</h3>
-          <p class="mt-4 text-car-muted">Acesse pelo navegador, sem instalar nada. Feito para qualquer prestador de serviço automotivo — de motos a caminhões.</p>
+      <figure class="cmp-wrap reveal">
+        <div class="shell">
+          <div class="core compare" id="compare">
+            <div class="cmp-layer cmp-before">
+              <span class="cmp-tag">Antes</span>
+              <div class="phone">
+                <div class="screen chat">
+                  <div class="chat-head">
+                    <i class="ph-light ph-caret-left" aria-hidden="true"></i>
+                    <span class="chat-av" aria-hidden="true">C</span>
+                    <div><strong>Cliente</strong><small>online</small></div>
+                  </div>
+                  <div class="chat-body">
+                    <p class="bub" style="--i:0">Já está pronto?<time class="mono">09:12</time></p>
+                    <p class="bub" style="--i:1">Quando vou poder retirar o meu carro?<time class="mono">10:47</time></p>
+                    <p class="bub shout" style="--i:2">EU NÃO AUTORIZEI ESSE ORÇAMENTO!!<time class="mono">13:05</time></p>
+                    <p class="bub" style="--i:3">Meu carro está a um tempão ai e eu nem sei nada sobre ele<time class="mono">15:31</time></p>
+                    <p class="bub typing" style="--i:4" aria-label="Cliente digitando"><span></span><span></span><span></span></p>
+                  </div>
+                  <div class="chat-input" aria-hidden="true"><span>Mensagem</span><i class="ph-light ph-microphone"></i></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cmp-layer cmp-after">
+              <span class="cmp-tag cmp-tag-r">Com o CAR.e</span>
+              <div class="phone">
+                <div class="screen app">
+                  <div class="app-head">
+                    <small class="mono">OS 4821</small>
+                    <strong>Honda Civic 2019</strong>
+                    <span class="status"><i class="ph-light ph-circle-notch"></i> <span>Em execução</span></span>
+                  </div>
+                  <figure class="app-photo">
+                    <img src="assets/servico-foto-2.jpg" alt="Filtro de ar antigo ao lado do filtro novo" loading="lazy">
+                    <figcaption><span>Filtro de ar substituído</span><time class="mono">13:22</time></figcaption>
+                  </figure>
+                  <ol class="app-steps">
+                    <li class="done" style="--i:0">Check-in com fotos</li>
+                    <li class="done" style="--i:1">Diagnóstico enviado</li>
+                    <li class="done" style="--i:2">Orçamento aprovado pelo cliente</li>
+                    <li class="now" style="--i:3">Peças substituídas</li>
+                    <li class="next" style="--i:4">Previsão de entrega <span class="mono">17:00</span></li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <input class="cmp-range" id="cmp-range" type="range" min="0" max="100" step="0.1" value="50" aria-label="Arraste para comparar antes e depois do CAR.e">
+            <div class="cmp-handle" aria-hidden="true"><span><i class="ph-light ph-caret-left"></i><i class="ph-light ph-caret-right"></i></span></div>
+          </div>
+        </div>
+        <figcaption class="cmp-cap">
+          <span>Antes, o cliente pergunta. Com o CAR.e, ele acompanha.</span>
+          <span class="cmp-hint"><i class="ph-light ph-arrows-left-right"></i>Arraste para comparar</span>
+        </figcaption>
+      </figure>
+
+      <div class="ledger">
+        <div class="ledger-group reveal">
+          <h3>No dia a dia</h3>
+          <div class="ledger-item">
+            <i class="ph-light ph-bell-slash"></i>
+            <div><h4>Menos interrupções</h4><p>Muito menos ligações e mensagens perguntando do andamento.</p></div>
+          </div>
+          <div class="ledger-item">
+            <i class="ph-light ph-chats-circle"></i>
+            <div><h4>Chat com o contexto do veículo</h4><p>A conversa sempre mostra de qual carro e de qual serviço se trata.</p></div>
+          </div>
+          <div class="ledger-item">
+            <i class="ph-light ph-browser"></i>
+            <div><h4>Painel web, sem instalar nada</h4><p>Agenda, orçamentos e catálogo de serviços e peças no navegador.</p></div>
+          </div>
         </div>
 
-        <div class="mt-12 grid md:grid-cols-3 gap-6">
-          <div class="rounded-2xl border border-car-border bg-white p-6">
-            <div class="w-11 h-11 rounded-xl bg-car-blue/10 flex items-center justify-center">
-              <svg class="w-5.5 h-5.5 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            </div>
-            <h4 class="font-sora mt-4 font-semibold text-car-navy">Agenda Inteligente</h4>
-            <p class="mt-2 text-sm text-car-muted">Controle total dos horários. Organize encaixes, evite conflitos e otimize a ocupação da sua equipe.</p>
+        <div class="ledger-group reveal" style="--d:1">
+          <h3>Para crescer</h3>
+          <div class="ledger-item">
+            <i class="ph-light ph-storefront"></i>
+            <div><h4>Vitrine por especialidade e região</h4><p>Novos clientes encontram você pelo que você faz, com avaliações de quem já foi atendido.</p></div>
           </div>
-          <div class="rounded-2xl border border-car-border bg-white p-6">
-            <div class="w-11 h-11 rounded-xl bg-car-blue/10 flex items-center justify-center">
-              <svg class="w-5.5 h-5.5 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-8-4-8 4m16 0-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-            </div>
-            <h4 class="font-sora mt-4 font-semibold text-car-navy">Catálogo de Produtos e Serviços</h4>
-            <p class="mt-2 text-sm text-car-muted">Cadastre serviços, peças e preços. Facilite o orçamento e a comunicação com o cliente.</p>
+          <div class="ledger-item">
+            <i class="ph-light ph-chart-line-up"></i>
+            <div><h4>Desempenho por técnico</h4><p>Serviços concluídos, nota média e constância, sem cadastrar nada a mais.</p></div>
           </div>
-          <div class="rounded-2xl border border-car-blue/30 bg-white p-6 relative overflow-hidden">
-            <span class="absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-wide text-car-blue bg-car-blue/10 px-2 py-1 rounded-full">Destaque</span>
-            <div class="w-11 h-11 rounded-xl bg-car-blue/10 flex items-center justify-center">
-              <svg class="w-5.5 h-5.5 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-            </div>
-            <h4 class="font-sora mt-4 font-semibold text-car-navy">Vitrine no Marketplace</h4>
-            <p class="mt-2 text-sm text-car-muted">Apareça para novos clientes por especialidade — oficina, elétrica, borracharia, troca de óleo, lava-rápido, detailing e mais — e por região. Ganhe visibilidade com as avaliações de quem já foi atendido.</p>
+          <div class="ledger-item">
+            <i class="ph-light ph-identification-badge"></i>
+            <div><h4>Técnico com currículo verificado</h4><p>Cada serviço concluído vira histórico profissional, com PDF para compartilhar.</p></div>
           </div>
         </div>
       </div>
@@ -500,65 +1046,77 @@
   </section>
 
   <!-- CTA FINAL -->
-  <section id="cta-final" class="py-24 border-t border-car-border">
-    <div class="max-w-3xl mx-auto px-5 sm:px-8">
-      <div class="reveal relative rounded-3xl border border-car-border bg-white p-8 sm:p-12 overflow-hidden text-center shadow-card">
-        <div class="absolute -top-20 -right-20 w-64 h-64 bg-car-blue/10 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-car-navy/5 rounded-full blur-3xl"></div>
+  <section class="cta" id="cta-final">
+    <div class="wrap cta-grid">
+      <div>
+        <h2 class="reveal">Pronto para acabar com a incerteza?</h2>
+        <p class="cta-lead reveal" style="--d:1">Entre para a lista de acesso antecipado do CAR.e e seja um dos primeiros a testar.</p>
+        <p class="cta-mail reveal" style="--d:2">Prefere conversar? <a href="mailto:contato@careauto.com.br">contato@careauto.com.br</a></p>
+      </div>
 
-        <div class="relative">
-          <h2 class="font-sora text-3xl sm:text-4xl font-bold text-car-navy">Pronto para acabar com a incerteza?</h2>
-          <p class="mt-4 text-car-muted">Entre para a lista de acesso antecipado do CAR.e e seja um dos primeiros a testar.</p>
-
-          <div id="cta-form-wrap" class="mt-8">
-            <div class="flex justify-center gap-3 mb-6">
-              <button type="button" data-role="motorista" class="role-btn role-active text-sm font-medium border border-car-border rounded-full px-5 py-2 transition-colors">Sou Motorista</button>
-              <button type="button" data-role="prestador" class="role-btn text-sm font-medium border border-car-border rounded-full px-5 py-2 transition-colors">Sou Prestador de Serviço</button>
+      <div class="shell reveal" style="--d:1">
+        <div class="core form-card">
+          <div id="cta-form-wrap">
+            <div class="seg" role="group" aria-label="Quem é você">
+              <button type="button" data-role="motorista" class="role-btn role-active" aria-pressed="true">Sou motorista</button>
+              <button type="button" data-role="prestador" class="role-btn" aria-pressed="false">Sou prestador</button>
             </div>
 
-            <form id="cta-form" class="max-w-md mx-auto text-left">
+            <form id="cta-form" novalidate>
               <input type="hidden" id="role-input" name="role" value="motorista">
 
               <!-- Campos para Motorista (Cliente) -->
-              <div id="fields-motorista" class="space-y-3">
-                <input type="text" name="nome" required maxlength="40" placeholder="Nome completo" class="w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
-                <div>
-                  <input type="tel" name="telefone" required maxlength="15" inputmode="numeric" placeholder="Telefone / WhatsApp (com DDD)" class="js-tel w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
-                  <p class="field-error hidden mt-1 text-xs text-red-600">Informe um telefone válido com DDD (ex: (11) 91234-5678).</p>
+              <div id="fields-motorista" class="fields">
+                <div class="field">
+                  <label for="f-nome">Nome completo</label>
+                  <input id="f-nome" type="text" name="nome" required maxlength="40" autocomplete="name" placeholder="Como você se chama">
+                  <p class="field-error hidden">Informe seu nome.</p>
                 </div>
-                <div>
-                  <input type="email" name="email" required placeholder="seu@email.com" class="js-email w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
-                  <p class="field-error hidden mt-1 text-xs text-red-600">Informe um e-mail válido.</p>
+                <div class="field">
+                  <label for="f-tel">Telefone ou WhatsApp</label>
+                  <input id="f-tel" type="tel" name="telefone" required maxlength="15" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 91234-5678" class="js-tel">
+                  <p class="field-error hidden">Informe um telefone válido com DDD, por exemplo (11) 91234-5678.</p>
+                </div>
+                <div class="field">
+                  <label for="f-email">E-mail</label>
+                  <input id="f-email" type="email" name="email" required autocomplete="email" placeholder="seu@email.com" class="js-email">
+                  <p class="field-error hidden">Informe um e-mail válido.</p>
                 </div>
               </div>
 
               <!-- Campos para Prestador de Serviço -->
-              <div id="fields-prestador" class="hidden space-y-3">
-                <input type="text" name="estabelecimento" maxlength="40" placeholder="Nome do estabelecimento" class="w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
-                <div>
-                  <input type="tel" name="telefone_prestador" maxlength="15" inputmode="numeric" placeholder="Telefone para contato (com DDD)" class="js-tel w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
-                  <p class="field-error hidden mt-1 text-xs text-red-600">Informe um telefone válido com DDD (ex: (11) 91234-5678).</p>
+              <div id="fields-prestador" class="fields hidden">
+                <div class="field">
+                  <label for="f-est">Nome do estabelecimento</label>
+                  <input id="f-est" type="text" name="estabelecimento" maxlength="40" autocomplete="organization" placeholder="Ex.: Auto Elétrica Paraná">
+                  <p class="field-error hidden">Informe o nome do estabelecimento.</p>
                 </div>
-                <div>
-                  <input type="email" name="email_prestador" placeholder="seu@email.com" class="js-email w-full rounded-xl bg-car-bgsoft border border-car-border px-4 py-3 text-sm text-car-navy placeholder:text-car-muted focus:outline-none focus:border-car-blue">
-                  <p class="field-error hidden mt-1 text-xs text-red-600">Informe um e-mail válido.</p>
+                <div class="field">
+                  <label for="f-tel-p">Telefone para contato</label>
+                  <input id="f-tel-p" type="tel" name="telefone_prestador" maxlength="15" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 91234-5678" class="js-tel">
+                  <p class="field-error hidden">Informe um telefone válido com DDD, por exemplo (11) 91234-5678.</p>
+                </div>
+                <div class="field">
+                  <label for="f-email-p">E-mail</label>
+                  <input id="f-email-p" type="email" name="email_prestador" autocomplete="email" placeholder="seu@email.com" class="js-email">
+                  <p class="field-error hidden">Informe um e-mail válido.</p>
                 </div>
               </div>
 
-              <label class="mt-4 flex items-start gap-2 text-xs text-car-muted leading-relaxed">
-                <input type="checkbox" name="consentimento" required class="mt-0.5 shrink-0 accent-car-blue">
-                <span>Concordo em fornecer meus dados para contato sobre o CAR.e, conforme a <a href="privacidade.html" target="_blank" class="text-car-blue underline hover:text-car-bluedark">Política de Privacidade</a>.</span>
+              <label class="consent">
+                <input type="checkbox" name="consentimento" required>
+                <span>Concordo em fornecer meus dados para contato sobre o CAR.e, conforme a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span>
               </label>
+              <p class="field-error hidden" id="consent-error">Marque a caixa acima para continuar.</p>
 
-              <button type="submit" class="mt-4 w-full rounded-xl bg-car-blue px-6 py-3 font-semibold text-white hover:bg-car-bluedark transition-colors">
-                Quero Testar Agora
-              </button>
+              <button type="submit" class="btn btn-primary">Quero testar <span class="btn-ic"><i class="ph-light ph-arrow-right"></i></span></button>
             </form>
           </div>
 
-          <div id="cta-success" class="hidden mt-8 flex flex-col items-center gap-3">
-            <svg class="w-10 h-10 text-car-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11"/></svg>
-            <p class="font-medium text-car-navy">Você entrou para a lista! Em breve entramos em contato.</p>
+          <div id="cta-success" class="hidden" role="status">
+            <i class="ph-light ph-seal-check"></i>
+            <p>Você entrou para a lista.</p>
+            <span>Em breve entramos em contato.</span>
           </div>
         </div>
       </div>
@@ -567,99 +1125,222 @@
 
 </main>
 
-<!-- FOOTER -->
-<footer class="bg-car-deep text-white py-14">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-10">
-      <div>
-        <a href="#top" class="flex items-center">
-          <img src="assets/logo-care-light.png" alt="CAR.e" class="h-7 w-auto">
-        </a>
-        <p class="mt-3 text-sm text-blue-100/70 leading-relaxed">Protocolo digital de procedência e certificação para todo tipo de veículo automotor.</p>
+<!-- RODAPÉ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#top"><img src="assets/logo-care-light.png" alt="CAR.e" width="820" height="240"></a>
+        <p>Protocolo digital de procedência e certificação para todo tipo de veículo automotor.</p>
       </div>
-
-      <div>
-        <h4 class="text-sm font-semibold">Produto</h4>
-        <ul class="mt-4 space-y-2 text-sm text-blue-100/70">
-          <li><a href="#como-funciona" class="hover:text-white">Como Funciona</a></li>
-          <li><a href="#seguranca" class="hover:text-white">Segurança</a></li>
-          <li><a href="#prestadores" class="hover:text-white">Para Prestadores</a></li>
-          <li><a href="#motoristas" class="hover:text-white">Para Motoristas</a></li>
+      <div class="foot-links">
+        <ul>
+          <li><a href="#como-funciona">Como funciona</a></li>
+          <li><a href="#seguranca">Segurança</a></li>
+          <li><a href="#prestadores">Para prestadores</a></li>
         </ul>
-      </div>
-
-      <div>
-        <h4 class="text-sm font-semibold">Empresa</h4>
-        <ul class="mt-4 space-y-2 text-sm text-blue-100/70">
-          <li><a href="sobre.html" class="hover:text-white">Sobre o Projeto</a></li>
-          <li><a href="mailto:contato@careauto.com.br" class="hover:text-white">Contato</a></li>
+        <ul>
+          <li><a href="sobre.html">Sobre o projeto</a></li>
+          <li><a href="mailto:contato@careauto.com.br">Contato</a></li>
         </ul>
-      </div>
-
-      <div>
-        <h4 class="text-sm font-semibold">Legal</h4>
-        <ul class="mt-4 space-y-2 text-sm text-blue-100/70">
-          <li><a href="termos.html" class="hover:text-white">Termos de Uso</a></li>
-          <li><a href="privacidade.html" class="hover:text-white">Privacidade</a></li>
-          <li><a href="exclusao-conta.html" class="hover:text-white">Excluir conta</a></li>
+        <ul>
+          <li><a href="termos.html">Termos de uso</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+          <li><a href="exclusao-conta.html">Excluir conta</a></li>
         </ul>
       </div>
     </div>
-
-    <div class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-blue-100/70">
-      <p>© 2026 CAR.e. Todos os direitos reservados.</p>
-      <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1">
-        <span class="w-1.5 h-1.5 rounded-full bg-blue-300"></span>
-        Powered by CAR.e
-      </span>
-    </div>
+    <p class="foot-bottom">© 2026 CAR.e. Todos os direitos reservados.</p>
   </div>
 </footer>
 
 <script>
-  // Mobile menu toggle
+  requestAnimationFrame(() => document.body.classList.add('is-loaded'));
+
+  // Menu mobile: overlay com links em cascata
   const menuBtn = document.getElementById('menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
-  const iconMenu = document.getElementById('icon-menu');
-  const iconClose = document.getElementById('icon-close');
+  function setMenu(open) {
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    mobileMenu.classList.toggle('is-open', open);
+    mobileMenu.setAttribute('aria-hidden', String(!open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuBtn.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+  mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
 
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-    iconMenu.classList.toggle('hidden');
-    iconClose.classList.toggle('hidden');
-  });
-
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.add('hidden');
-      iconMenu.classList.remove('hidden');
-      iconClose.classList.add('hidden');
-    });
-  });
-
-  // Navbar style on scroll
+  // Navegação ganha corpo depois que o hero sai de cena (sem listener de scroll)
   const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      navbar.classList.add('shadow-sm', 'border-car-border');
-    } else {
-      navbar.classList.remove('shadow-sm', 'border-car-border');
-    }
+  const heroEl = document.querySelector('.hero');
+  new IntersectionObserver(([entry]) => {
+    navbar.classList.toggle('is-scrolled', entry.intersectionRatio < 0.85);
+  }, { threshold: [0.85] }).observe(heroEl);
+
+  // Link da seção atual em destaque
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const navIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach((a) => a.classList.toggle('is-current', a.getAttribute('href') === '#' + entry.target.id));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('#motoristas, #seguranca, #prestadores').forEach((s) => navIO.observe(s));
+
+  // Revelação na entrada
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { entry.target.classList.add('is-in'); revealIO.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
+
+  // Cadeado do "Ninguém edita": tranca ao entrar em cena; ao passar o mouse, destrava e tranca de novo
+  const factLock = document.getElementById('fact-lock');
+  new IntersectionObserver(([entry], io) => {
+    if (!entry.isIntersecting) return;
+    setTimeout(() => factLock.classList.add('is-locked'), 700);
+    io.disconnect();
+  }, { threshold: 0.6 }).observe(factLock);
+  factLock.closest('.fact').addEventListener('pointerenter', () => {
+    if (!factLock.classList.contains('is-locked')) return;
+    factLock.classList.remove('is-locked');
+    setTimeout(() => factLock.classList.add('is-locked'), 650);
   });
 
-  // Reveal on scroll
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  revealEls.forEach(el => observer.observe(el));
+  // Cadeado do certificado: clicável, balança e não abre
+  const certLock = document.getElementById('cert-lock');
+  const certCap = document.getElementById('cert-cap');
+  let capTimer;
+  certLock.addEventListener('click', () => {
+    certLock.classList.remove('is-tugging');
+    void certLock.offsetWidth; // reinicia a animação a cada clique
+    certLock.classList.add('is-tugging');
+    certCap.textContent = 'Selado. Nenhum registro do dossiê pode ser alterado.';
+    certCap.classList.add('is-on');
+    clearTimeout(capTimer);
+    capTimer = setTimeout(() => { certCap.textContent = 'Abra o cadeado'; certCap.classList.remove('is-on'); }, 3200);
+  });
+  certLock.addEventListener('animationend', () => certLock.classList.remove('is-tugging'));
 
-  // Role toggle (Motorista / Prestador) — alterna os campos exibidos e os obrigatórios
+  // Card ao vivo do hero: o serviço acontece na frente da pessoa
+  const events = document.querySelectorAll('#live .ev');
+  const seal = document.getElementById('live-seal');
+  const status = document.getElementById('live-status');
+  let timers = [];
+  function playLive() {
+    timers.forEach(clearTimeout); timers = [];
+    events.forEach((ev) => ev.classList.remove('is-in'));
+    seal.classList.remove('is-in');
+    status.classList.remove('is-done');
+    status.innerHTML = '<i class="ph-light ph-circle-notch"></i> <span>Em execução</span>';
+    const step = 900;
+    events.forEach((ev, i) => timers.push(setTimeout(() => ev.classList.add('is-in'), 500 + i * step)));
+    timers.push(setTimeout(() => {
+      seal.classList.add('is-in');
+      status.classList.add('is-done');
+      status.innerHTML = '<i class="ph-light ph-check"></i> <span>Concluído</span>';
+    }, 500 + events.length * step + 300));
+  }
+  const liveIO = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) { playLive(); liveIO.disconnect(); }
+  }, { threshold: 0.35 });
+  liveIO.observe(document.getElementById('live'));
+  document.getElementById('replay').addEventListener('click', playLive);
+
+  // Problema: a lista de dores vira a lista de respostas
+  const swaps = document.getElementById('swaps');
+  new IntersectionObserver(([entry], io) => {
+    if (entry.isIntersecting) { swaps.classList.add('is-in'); io.disconnect(); }
+  }, { threshold: 0.3 }).observe(swaps);
+
+  // Como funciona: o visual fixo acompanha o passo em leitura
+  const steps = document.querySelectorAll('.step');
+  const frames = document.querySelectorAll('.how-frame img');
+  const caps = ['Estado do veículo registrado na chegada', 'Andamento com fotos, direto no app', 'Serviço confirmado vira dossiê'];
+  const capEl = document.getElementById('how-cap');
+  const countEl = document.getElementById('how-count');
+  const stepLock = document.getElementById('step-lock');
+  const stepIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const idx = Number(entry.target.dataset.step);
+      steps.forEach((s) => s.classList.toggle('is-active', s === entry.target));
+      frames.forEach((f) => f.classList.toggle('is-on', Number(f.dataset.step) === idx));
+      capEl.textContent = caps[idx];
+      countEl.textContent = (idx + 1) + ' de 3';
+      stepLock.classList.toggle('is-locked', idx === 2);
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  steps.forEach((s) => stepIO.observe(s));
+
+  // Aprovação de orçamento: demonstração do que fica registrado
+  const log = document.getElementById('approve-log');
+  document.querySelectorAll('.approve-actions button').forEach((b) => {
+    b.addEventListener('click', () => {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+      const yes = b.dataset.answer === 'yes';
+      log.classList.toggle('is-no', !yes);
+      log.innerHTML = yes
+        ? '<i class="ph-fill ph-seal-check"></i><span>Aprovado por você às <span class="mono">' + hh + '</span>. Registrado no dossiê.</span>'
+        : '<i class="ph-fill ph-x-circle"></i><span>Recusado por você às <span class="mono">' + hh + '</span>. Registrado no dossiê.</span>';
+    });
+  });
+
+  // Comparador antes/depois: as mensagens chegam, a divisória desliza uma vez sozinha e depois fica com o visitante
+  const compare = document.getElementById('compare');
+  const cmpRange = document.getElementById('cmp-range');
+  let userMoved = false;
+  let introFrame;
+  const setPos = (v) => { compare.style.setProperty('--pos', v + '%'); cmpRange.value = v; };
+  const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  function glide(from, to, ms) {
+    return new Promise((done) => {
+      const t0 = performance.now();
+      const tick = (now) => {
+        if (userMoved) return done();
+        const t = Math.min(1, (now - t0) / ms);
+        setPos(from + (to - from) * easeInOut(t));
+        if (t < 1) introFrame = requestAnimationFrame(tick); else done();
+      };
+      introFrame = requestAnimationFrame(tick);
+    });
+  }
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  setPos(72);
+  new IntersectionObserver(async ([entry], io) => {
+    if (!entry.isIntersecting) return;
+    io.disconnect();
+    compare.classList.add('is-in');
+    await wait(3300); // as 4 mensagens + "digitando"
+    if (userMoved) return;
+    compare.classList.add('is-after');
+    await glide(72, 26, 1500);
+    await wait(700);
+    await glide(26, 50, 900);
+  }, { threshold: 0.45 }).observe(compare);
+
+  function takeOver() {
+    userMoved = true;
+    cancelAnimationFrame(introFrame);
+    compare.classList.add('is-in', 'is-after');
+  }
+  cmpRange.addEventListener('input', () => { takeOver(); setPos(Number(cmpRange.value)); });
+  cmpRange.addEventListener('pointerdown', () => { takeOver(); compare.classList.add('is-drag'); });
+  ['pointerup', 'pointercancel', 'blur'].forEach((ev) => cmpRange.addEventListener(ev, () => compare.classList.remove('is-drag')));
+
+  // Luz que segue o cursor nos blocos
+  document.querySelectorAll('.cell').forEach((cell) => {
+    cell.addEventListener('pointermove', (e) => {
+      const r = cell.getBoundingClientRect();
+      cell.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      cell.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  // Seletor Motorista / Prestador: alterna os campos exibidos e os obrigatórios
   const roleButtons = document.querySelectorAll('.role-btn');
   const roleInput = document.getElementById('role-input');
   const fieldsMotorista = document.getElementById('fields-motorista');
@@ -667,39 +1348,29 @@
 
   function setRequired(container, isRequired) {
     container.querySelectorAll('input').forEach((inp) => {
-      if (isRequired) {
-        inp.setAttribute('required', '');
-      } else {
-        inp.removeAttribute('required');
-      }
+      if (isRequired) inp.setAttribute('required', '');
+      else inp.removeAttribute('required');
     });
   }
 
   roleButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      roleButtons.forEach((b) => b.classList.remove('role-active'));
+      roleButtons.forEach((b) => { b.classList.remove('role-active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('role-active');
+      btn.setAttribute('aria-pressed', 'true');
       roleInput.value = btn.dataset.role;
 
-      if (btn.dataset.role === 'motorista') {
-        fieldsMotorista.classList.remove('hidden');
-        fieldsPrestador.classList.add('hidden');
-        setRequired(fieldsMotorista, true);
-        setRequired(fieldsPrestador, false);
-      } else {
-        fieldsPrestador.classList.remove('hidden');
-        fieldsMotorista.classList.add('hidden');
-        setRequired(fieldsPrestador, true);
-        setRequired(fieldsMotorista, false);
-      }
+      const isMotorista = btn.dataset.role === 'motorista';
+      fieldsMotorista.classList.toggle('hidden', !isMotorista);
+      fieldsPrestador.classList.toggle('hidden', isMotorista);
+      setRequired(fieldsMotorista, isMotorista);
+      setRequired(fieldsPrestador, !isMotorista);
     });
   });
 
-  // ————————————————————————————————————————————————————————————————
-  // Integração com Google Forms (respostas caem direto numa Planilha Google)
-  // Motorista e Prestador usam as MESMAS 3 perguntas do Forms (nome, telefone,
-  // e-mail) — a coluna "role" já identifica quem é quem na planilha.
-  // ————————————————————————————————————————————————————————————————
+  // Integração com Google Forms (respostas caem direto numa Planilha Google).
+  // Motorista e Prestador usam as MESMAS 3 perguntas do Forms (nome, telefone, e-mail);
+  // a coluna "role" identifica quem é quem na planilha.
   const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSertZxAyR1Py4J562s9KSc8B11MflPWNiMk7N7vZjZ_wAdL9w/formResponse';
   const GOOGLE_FORM_ENTRY_MAP = {
     role: 'entry.731340200',
@@ -711,22 +1382,20 @@
     email_prestador: 'entry.708438136', // mesma coluna de "email"
   };
 
-  // O Forms guarda "role" como múltipla escolha — o texto precisa bater exatamente com a opção.
+  // O Forms guarda "role" como múltipla escolha: o texto precisa bater exatamente com a opção.
   const ROLE_LABELS = {
     motorista: 'Motorista / Dono de veículo',
     prestador: 'Prestador de serviço (oficina, elétrica, borracharia, etc.)',
   };
 
   function sendToGoogleForm(formData) {
-    if (!GOOGLE_FORM_ACTION_URL) return; // integração não configurada ainda
-
+    if (!GOOGLE_FORM_ACTION_URL) return;
     const body = new URLSearchParams();
     formData.forEach((value, key) => {
       const entryId = GOOGLE_FORM_ENTRY_MAP[key];
       if (!entryId || !value) return;
       body.append(entryId, key === 'role' ? (ROLE_LABELS[value] || value) : value);
     });
-
     // no-cors: o Google Forms não libera CORS, então não conseguimos ler a resposta.
     // O envio ainda funciona e a resposta cai normalmente na planilha vinculada.
     fetch(GOOGLE_FORM_ACTION_URL, {
@@ -737,10 +1406,10 @@
     }).catch(() => {});
   }
 
-  // Validação + formatação automática de telefone e e-mail (deixa os dados mais confiáveis)
   function showFieldError(input, show) {
     const errorEl = input.parentElement.querySelector('.field-error');
-    input.classList.toggle('border-red-500', show);
+    input.classList.toggle('is-invalid', show);
+    input.setAttribute('aria-invalid', String(show));
     if (errorEl) errorEl.classList.toggle('hidden', !show);
   }
 
@@ -753,19 +1422,17 @@
     if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
     return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
   }
-
-  function isValidEmail(value) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-  }
-
-  function isValidPhone(value) {
-    const digits = value.replace(/\D/g, '');
-    return digits.length === 10 || digits.length === 11; // DDD + número
-  }
+  const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+  const isValidPhone = (v) => { const n = v.replace(/\D/g, '').length; return n === 10 || n === 11; };
 
   function validateVisibleFields() {
     const activeGroup = fieldsMotorista.classList.contains('hidden') ? fieldsPrestador : fieldsMotorista;
     let valid = true;
+
+    const nameInput = activeGroup.querySelector('input[type="text"]');
+    const nameOk = nameInput.value.trim().length >= 2;
+    showFieldError(nameInput, !nameOk);
+    if (!nameOk) valid = false;
 
     const telInput = activeGroup.querySelector('.js-tel');
     const telOk = isValidPhone(telInput.value);
@@ -777,27 +1444,29 @@
     showFieldError(emailInput, !emailOk);
     if (!emailOk) valid = false;
 
+    const consent = ctaForm.querySelector('input[name="consentimento"]');
+    document.getElementById('consent-error').classList.toggle('hidden', consent.checked);
+    if (!consent.checked) valid = false;
+
+    if (!valid) activeGroup.querySelector('.is-invalid')?.focus();
     return valid;
   }
 
-  // Telefone: formata em tempo real enquanto o usuário digita
   document.querySelectorAll('.js-tel').forEach((input) => {
-    input.addEventListener('input', () => {
-      input.value = maskPhone(input.value);
-      showFieldError(input, false);
-    });
+    input.addEventListener('input', () => { input.value = maskPhone(input.value); showFieldError(input, false); });
   });
-
-  // E-mail: normaliza (remove espaços e deixa minúsculo) ao sair do campo
   document.querySelectorAll('.js-email').forEach((input) => {
     input.addEventListener('input', () => showFieldError(input, false));
-    input.addEventListener('blur', () => {
-      input.value = input.value.trim().toLowerCase();
-    });
+    input.addEventListener('blur', () => { input.value = input.value.trim().toLowerCase(); });
+  });
+  document.querySelectorAll('.fields input[type="text"]').forEach((input) => {
+    input.addEventListener('input', () => showFieldError(input, false));
   });
 
-  // Fake form submit (sem backend — só validação da demo, com integração opcional acima)
   const ctaForm = document.getElementById('cta-form');
+  ctaForm.querySelector('input[name="consentimento"]').addEventListener('change', () => {
+    document.getElementById('consent-error').classList.add('hidden');
+  });
   ctaForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!validateVisibleFields()) return;
@@ -805,7 +1474,6 @@
     document.getElementById('cta-form-wrap').classList.add('hidden');
     document.getElementById('cta-success').classList.remove('hidden');
   });
-
 </script>
 
 </body>
